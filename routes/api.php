@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\BannerController;
+use App\Http\Controllers\API\GenericCodeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,5 +27,9 @@ Route::post('/auth', [AuthController::class, 'auth'])->name('auth');
 Route::middleware('bearerToken')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
+    });
+    Route::controller(BannerController::class)->name('banner')->group(function () {
+        Route::get('/banner', 'index')->name('index')->withoutMiddleware('bearerToken');
+        Route::put('/banner/{id}', 'update')->name('update');
     });
 });
