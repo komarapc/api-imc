@@ -32,4 +32,11 @@ Route::middleware('bearerToken')->group(function () {
         Route::get('/banner', 'index')->name('index')->withoutMiddleware('bearerToken');
         Route::put('/banner/{id}', 'update')->name('update');
     });
+    Route::controller(GenericCodeController::class)->name('generic-code.')->group(function () {
+        Route::get('/generic-code', 'index')->name('index')->withoutMiddleware('bearerToken');
+        Route::get('/generic-code/{id}', 'show')->name('show')->withoutMiddleware('bearerToken');
+        Route::post('/generic-code', 'store')->name('store');
+        Route::put('/generic-code/{id}', 'update')->name('update');
+        Route::delete('/generic-code/{id}', 'destroy')->name('destroy');
+    });
 });
