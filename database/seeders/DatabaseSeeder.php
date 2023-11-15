@@ -26,7 +26,9 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             UserSeeder::class,
             BannerSeeder::class,
-            GenericCodeSeeder::class
+            GenericCodeSeeder::class,
+            FasilitasSeeder::class,
+            GalerySeeder::class,
         ]);
     }
 }
