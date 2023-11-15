@@ -5,18 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Malico\LaravelNanoid\HasNanoids;
 
-class GenericCode extends Model
+class Fasilitas extends Model
 {
-    use HasFactory, SoftDeletes;
-
+    use HasFactory, HasNanoids, SoftDeletes;
+    protected $table = 'fasilitas';
     protected $guarded = [];
-    protected $primaryKey = 'generic_code_id';
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
     protected $keyType = 'string';
     public $incrementing = false;
-    public function fasilitas()
+
+    public function jenjang()
     {
-        return $this->hasMany(Fasilitas::class, 'generic_code_id', 'generic_code_id');
+        return $this->belongsTo(GenericCode::class, 'generic_code_id', 'generic_code_id');
     }
 }

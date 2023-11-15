@@ -47,12 +47,12 @@ class GenericCodeController extends Controller
                 'message' => 'Success get generic codes',
                 'success' => true,
                 'data' => [
-                    'total_data' => $totalData,
-                    'total_page' => $totalPage,
                     'page' => [
-                        'current_page' => $current_page,
+                        'current_page'   => $current_page,
                         'previouse_page' => $previouse_page,
-                        'next_page' => $next_page,
+                        'next_page'      => $next_page,
+                        'total_page'     => $totalPage,
+                        'total_data'     => $totalData,
                     ],
                     'generic_code' => $genericCodes
                 ]

@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\BannerController;
+use App\Http\Controllers\API\FasilitasController;
+use App\Http\Controllers\API\FasilitasGaleriController;
 use App\Http\Controllers\API\GenericCodeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -39,4 +41,23 @@ Route::middleware('bearerToken')->group(function () {
         Route::put('/generic-code/{id}', 'update')->name('update');
         Route::delete('/generic-code/{id}', 'destroy')->name('destroy');
     });
+    Route::controller(FasilitasController::class)->name('fasilitas.')->group(function () {
+        Route::get('/fasilitas', 'index')->name('index')->withoutMiddleware('bearerToken');
+        Route::get('/fasilitas/{id}', 'show')->name('show')->withoutMiddleware('bearerToken');
+        Route::post('/fasilitas', 'store')->name('store');
+        Route::put('/fasilitas/{id}', 'update')->name('update');
+        Route::delete('/fasilitas/{id}', 'destroy')->name('destroy');
+    });
+    Route::controller(FasilitasGaleriController::class)->name('fasilitas-galeri.')->group(function () {
+        Route::get('/fasilitas-galeri', 'index')->name('index')->withoutMiddleware('bearerToken');
+        Route::get('/fasilitas-galeri/{id}', 'show')->name('show')->withoutMiddleware('bearerToken');
+        Route::post('/fasilitas-galeri', 'store')->name('store');
+        Route::put('/fasilitas-galeri/{id}', 'update')->name('update');
+        Route::delete('/fasilitas-galeri/{id}', 'destroy')->name('destroy');
+        Route::get('/fasilitas-galeri/{id}/total', 'countTotalByFasilitasId')
+            ->name('countTotalByFasilitasId')->withoutMiddleware('bearerToken');
+    });
+});
+Route::prefix('statistik')->name('statistik.')->group(function () {
+    Route::get('/fasilitas', [FasilitasController::class, 'statistic'])->name('fasilitas');
 });
