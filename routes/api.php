@@ -5,6 +5,7 @@ use App\Http\Controllers\API\BannerController;
 use App\Http\Controllers\API\FasilitasController;
 use App\Http\Controllers\API\FasilitasGaleriController;
 use App\Http\Controllers\API\GenericCodeController;
+use App\Http\Controllers\API\GaleryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -57,7 +58,17 @@ Route::middleware('bearerToken')->group(function () {
         Route::get('/fasilitas-galeri/{id}/total', 'countTotalByFasilitasId')
             ->name('countTotalByFasilitasId')->withoutMiddleware('bearerToken');
     });
+    Route::controller(GaleryController::class)->name('galeri.')->group(function () {
+        Route::get('/galeri', 'index')->name('index')->withoutMiddleware('bearerToken');
+        Route::get('/galeri/{id}', 'show')->name('show')->withoutMiddleware('bearerToken');
+        Route::post('/galeri', 'store')->name('store');
+        Route::put('/galeri/{id}', 'update')->name('update');
+        Route::delete('/galeri/{id}', 'destroy')->name('destroy');
+        Route::get('/galeri/{id}/total', 'countTotalByGaleryId')
+            ->name('countTotalByGaleryId')->withoutMiddleware('bearerToken');
+    });
 });
 Route::prefix('statistik')->name('statistik.')->group(function () {
     Route::get('/fasilitas', [FasilitasController::class, 'statistic'])->name('fasilitas');
+    Route::get('/galeri', [GaleryController::class, 'statistic'])->name('galery');
 });
