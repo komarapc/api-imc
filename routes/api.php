@@ -7,6 +7,7 @@ use App\Http\Controllers\API\FasilitasGaleriController;
 use App\Http\Controllers\API\GaleryFilesController;
 use App\Http\Controllers\API\GenericCodeController;
 use App\Http\Controllers\API\GaleryController;
+use App\Http\Controllers\API\TestimonialController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -77,8 +78,17 @@ Route::middleware('bearerToken')->group(function () {
         Route::get('/galeri-files/{id}/total', 'countTotalByGaleryId')
             ->name('countTotalByGaleryId')->withoutMiddleware('bearerToken');
     });
+    Route::controller(TestimonialController::class)->name('testimoni.')->group(function () {
+        Route::get('/testimoni', 'index')->name('index')->withoutMiddleware('bearerToken');
+        Route::get('/testimoni/{id}', 'show')->name('show')->withoutMiddleware('bearerToken');
+        Route::post('/testimoni', 'store')->name('store');
+        Route::put('/testimoni/{id}', 'update')->name('update');
+        Route::delete('/testimoni/{id}', 'destroy')->name('destroy');
+        Route::delete('/testimoni/{id}/avatar', 'deleteImageTestimonial')->name('destroy-avatar');
+    });
 });
 Route::prefix('statistik')->name('statistik.')->group(function () {
     Route::get('/fasilitas', [FasilitasController::class, 'statistic'])->name('fasilitas');
     Route::get('/galeri', [GaleryController::class, 'statistic'])->name('galery');
+    Route::get('/testimoni', [TestimonialController::class, 'statistic'])->name('testimoni');
 });
