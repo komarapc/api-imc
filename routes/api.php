@@ -4,6 +4,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\BannerController;
 use App\Http\Controllers\API\FasilitasController;
 use App\Http\Controllers\API\FasilitasGaleriController;
+use App\Http\Controllers\API\GaleryFilesController;
 use App\Http\Controllers\API\GenericCodeController;
 use App\Http\Controllers\API\GaleryController;
 use Illuminate\Http\Request;
@@ -65,6 +66,15 @@ Route::middleware('bearerToken')->group(function () {
         Route::put('/galeri/{id}', 'update')->name('update');
         Route::delete('/galeri/{id}', 'destroy')->name('destroy');
         Route::get('/galeri/{id}/total', 'countTotalByGaleryId')
+            ->name('countTotalByGaleryId')->withoutMiddleware('bearerToken');
+    });
+    Route::controller(GaleryFilesController::class)->name('fasilitas-galeri.')->group(function () {
+        Route::get('/galeri-files', 'index')->name('index')->withoutMiddleware('bearerToken');
+        Route::get('/galeri-files/{id}', 'show')->name('show')->withoutMiddleware('bearerToken');
+        Route::post('/galeri-files', 'store')->name('store');
+        Route::put('/galeri-files/{id}', 'update')->name('update');
+        Route::delete('/galeri-files/{id}', 'destroy')->name('destroy');
+        Route::get('/galeri-files/{id}/total', 'countTotalByGaleryId')
             ->name('countTotalByGaleryId')->withoutMiddleware('bearerToken');
     });
 });

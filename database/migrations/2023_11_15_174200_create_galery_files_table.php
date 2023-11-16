@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('file_name');
             $table->string('url');
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 
