@@ -47,5 +47,22 @@ class GenericCodeSeeder extends Seeder
         foreach ($article as $value) {
             GenericCode::create($value);
         }
+        $post_status = [
+            [
+                'generic_code_id' => '003',
+                'generic_code_name' =>  "Status Postingan"
+            ],
+            [
+                'generic_code_id' => '003^001',
+                'generic_code_name' =>  "Draft"
+            ],
+            [
+                'generic_code_id' => '003^002',
+                'generic_code_name' =>  "Publish"
+            ],
+        ];
+        foreach ($post_status as $value) {
+            GenericCode::create($value);
+        }
     }
 }
