@@ -5,14 +5,18 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Testimonial;
 use App\Services\Base64Services;
+use App\Services\GenerateResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TestimonialController extends Controller
 {
     protected $base64Services;
+    protected $genereateResponse;
     public function __construct(Base64Services $base64Services)
     {
         $this->base64Services = $base64Services;
+        $this->genereateResponse = new GenerateResponse();
     }
     /**
      * Display a listing of the resource.
@@ -113,15 +117,9 @@ class TestimonialController extends Controller
             $testimonials->save();
 
             // return response 201
-            return response()->json([
-                'statusCode' => 201,
-                'statusMessage' => 'CREATED',
-                'message' => 'Berhasil menambahkan testimoni.',
-                'data' => [
-                    'testimoni' => $testimonials
-                ],
-                'success' => true
-            ], 201);
+            return $this->genereateResponse->response201([
+                'testimoni' => $testimonials
+            ], 'Berhasil menambahkan testimoni.');
         } catch (\Throwable $th) {
             // unlink upload image
             if (isset($image)) unlink($image->file_path);
@@ -184,6 +182,7 @@ class TestimonialController extends Controller
     public function update(Request $request, string $id)
     {
         try {
+            DB::beginTransaction();
             $testimonials = Testimonial::find($id);
             if (!$testimonials) return response()->json([
                 'statusCode' => 404,
@@ -217,12 +216,11 @@ class TestimonialController extends Controller
             $testimonials->email = $request->email;
             $testimonials->phone_number = $request->phone_number;
             $testimonials->save();
+            DB::commit();
 
-            if ($testimonials->save()) {
-                // unlink previous image
-                if ($request->image) {
-                    $this->base64Services->deleteFileContent($previoesTestimonials->file_path);
-                }
+            if ($testimonials->save() && $request->image) {
+                $file_path = public_path('images/testimoni/' . $previoesTestimonials->image);
+                $this->base64Services->deleteFileContent($file_path);
             }
 
             // return response 200
@@ -236,13 +234,8 @@ class TestimonialController extends Controller
                 'success' => true
             ], 200);
         } catch (\Throwable $th) {
-            return response()->json([
-                'statusCode' => 500,
-                'statusMessage' => 'INTERNAL_SERVER_ERROR',
-                'message' => 'Terjadi kesalahan pada server.',
-                'error' => env('APP_DEBUG') ? $th->getMessage() : null,
-                'success' => false
-            ], 500);
+            DB::rollBack();
+            return $this->genereateResponse->response500('Terjadi kesalahan pada server.', env('APP_DEBUG') ? $th->getMessage() : null);
         }
     }
 
