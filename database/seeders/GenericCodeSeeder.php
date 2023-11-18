@@ -29,5 +29,23 @@ class GenericCodeSeeder extends Seeder
             'generic_code_id' => '001^003',
             'generic_code_name' =>  "SMPIT imc",
         ]);
+
+        $article = [
+            [
+                'generic_code_id' => '002',
+                'generic_code_name' =>  "Berita Artikel dan Info"
+            ],
+            [
+                'generic_code_id' => '002^001',
+                'generic_code_name' =>  "Berita Artikel"
+            ],
+            [
+                'generic_code_id' => '002^002',
+                'generic_code_name' =>  "Info dan Event"
+            ],
+        ];
+        foreach ($article as $value) {
+            GenericCode::create($value);
+        }
     }
 }
