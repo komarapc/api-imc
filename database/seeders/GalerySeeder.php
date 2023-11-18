@@ -20,57 +20,57 @@ class GalerySeeder extends Seeder
         $galeri_tk = [
             [
                 'name' => 'Masa Orientasi Orang Tua (MOOT)',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla. Velit ullamco labore incididunt sint sunt ea aliquip ex veniam voluptate ullamco.",
+                'description' => '',
                 'generic_code_id' => $generic_code_tkit
             ],
             [
                 'name' => 'Masa Orientasi Murid (MOM)',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla. Velit ullamco labore incididunt sint sunt ea aliquip ex veniam voluptate ullamco.",
+                'description' => '',
                 'generic_code_id' => $generic_code_tkit
             ],
             [
                 'name' => 'Welcome Back',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla. Velit ullamco labore incididunt sint sunt ea aliquip ex veniam voluptate ullamco.",
+                'description' => '',
                 'generic_code_id' => $generic_code_tkit
             ],
             [
                 'name' => 'Fun Cooking',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla. Velit ullamco labore incididunt sint sunt ea aliquip ex veniam voluptate ullamco.",
+                'description' => '',
                 'generic_code_id' => $generic_code_tkit
             ],
             [
                 'name' => 'Fun Swimming',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla. Velit ullamco labore incididunt sint sunt ea aliquip ex veniam voluptate ullamco.",
+                'description' => '',
                 'generic_code_id' => $generic_code_tkit
             ],
             [
                 'name' => 'Puncak Tema',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla. Velit ullamco labore incididunt sint sunt ea aliquip ex veniam voluptate ullamco.",
+                'description' => '',
                 'generic_code_id' => $generic_code_tkit
             ],
             [
                 'name' => 'Assembly',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla. Velit ullamco labore incididunt sint sunt ea aliquip ex veniam voluptate ullamco.",
+                'description' => '',
                 'generic_code_id' => $generic_code_tkit
             ],
             [
                 'name' => 'Outing Class',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla. Velit ullamco labore incididunt sint sunt ea aliquip ex veniam voluptate ullamco.",
+                'description' => '',
                 'generic_code_id' => $generic_code_tkit
             ],
             [
                 'name' => 'Lomba Hari Kemerdekaan',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla. Velit ullamco labore incididunt sint sunt ea aliquip ex veniam voluptate ullamco.",
+                'description' => '',
                 'generic_code_id' => $generic_code_tkit
             ],
             [
                 'name' => 'Field Trip',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla. Velit ullamco labore incididunt sint sunt ea aliquip ex veniam voluptate ullamco.",
+                'description' => '',
                 'generic_code_id' => $generic_code_tkit
             ],
             [
                 'name' => 'Home Visit',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla. Velit ullamco labore incididunt sint sunt ea aliquip ex veniam voluptate ullamco.",
+                'description' => '',
                 'generic_code_id' => $generic_code_tkit
             ],
         ];
@@ -78,67 +78,67 @@ class GalerySeeder extends Seeder
         $galeri_sd = [
             [
                 'name' => 'Masa Orientasi Orang Tua (MOOT)',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla.",
+                'description' => '',
                 'generic_code_id' => $generic_code_sdit,
             ],
             [
                 'name' => 'Masa Orientasi Orang Murid (MOM)',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla.",
+                'description' => '',
                 'generic_code_id' => $generic_code_sdit,
             ],
             [
                 'name' => 'Masa Orientasi Orang Murid (MOM)',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla.",
+                'description' => '',
                 'generic_code_id' => $generic_code_sdit,
             ],
             [
                 'name' => 'Welcome Back',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla.",
+                'description' => '',
                 'generic_code_id' => $generic_code_sdit,
             ],
             [
                 'name' => 'Kegiatan Islamic Day',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla.",
+                'description' => '',
                 'generic_code_id' => $generic_code_sdit,
             ],
             [
                 'name' => 'Kegiatan Class Meeting',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla.",
+                'description' => '',
                 'generic_code_id' => $generic_code_sdit,
             ],
             [
                 'name' => 'Projek Penguatan Profil Pelajar Pancasila (P5)',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla.",
+                'description' => '',
                 'generic_code_id' => $generic_code_sdit,
             ],
             [
                 'name' => 'Fun Swimming',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla.",
+                'description' => '',
                 'generic_code_id' => $generic_code_sdit,
             ],
             [
                 'name' => 'Assembly',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla.",
+                'description' => '',
                 'generic_code_id' => $generic_code_sdit,
             ],
             [
                 'name' => 'Outing Class',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla.",
+                'description' => '',
                 'generic_code_id' => $generic_code_sdit,
             ],
             [
                 'name' => 'Lomba Hari Kemerdekaan',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla.",
+                'description' => '',
                 'generic_code_id' => $generic_code_sdit,
             ],
             [
                 'name' => 'Field Trip',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla.",
+                'description' => '',
                 'generic_code_id' => $generic_code_sdit,
             ],
             [
                 'name' => 'Home Visit',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla.",
+                'description' => '',
                 'generic_code_id' => $generic_code_sdit,
             ],
         ];
@@ -146,72 +146,72 @@ class GalerySeeder extends Seeder
         $galeri_smp = [
             [
                 'name' => 'Masa Orientasi Orang Tua (MOOT)',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla.",
+                'description' => '',
                 'generic_code_id' => $generic_code_smpit,
             ],
             [
                 'name' => 'Masa Orientasi Orang Murid (MOM)',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla.",
+                'description' => '',
                 'generic_code_id' => $generic_code_smpit,
             ],
             [
                 'name' => 'Welcome Back',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla.",
+                'description' => '',
                 'generic_code_id' => $generic_code_smpit,
             ],
             [
                 'name' => 'Kegiatan Islamic Day',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla.",
+                'description' => '',
                 'generic_code_id' => $generic_code_smpit,
             ],
             [
                 'name' => 'Pelatihan dan Pelantikan OSIS',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla.",
+                'description' => '',
                 'generic_code_id' => $generic_code_smpit,
             ],
             [
                 'name' => 'Pelatihan dan Pelantikan OSIS',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla.",
+                'description' => '',
                 'generic_code_id' => $generic_code_smpit,
             ],
             [
                 'name' => 'Projek Penguatan Profil Pelajar Pancasila (P5)',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla.",
+                'description' => '',
                 'generic_code_id' => $generic_code_smpit,
             ],
             [
                 'name' => 'LDKS',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla.",
+                'description' => '',
                 'generic_code_id' => $generic_code_smpit,
             ],
             [
                 'name' => 'Perkemahan Jumat Sabtu',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla.",
+                'description' => '',
                 'generic_code_id' => $generic_code_smpit,
             ],
             [
                 'name' => 'Fun Swimming',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla.",
+                'description' => '',
                 'generic_code_id' => $generic_code_smpit,
             ],
             [
                 'name' => 'Assembly',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla.",
+                'description' => '',
                 'generic_code_id' => $generic_code_smpit,
             ],
             [
                 'name' => 'Lomba Hari Kemerdekaan',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla.",
+                'description' => '',
                 'generic_code_id' => $generic_code_smpit,
             ],
             [
                 'name' => 'Field Trip',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla.",
+                'description' => '',
                 'generic_code_id' => $generic_code_smpit,
             ],
             [
                 'name' => 'Home Visit',
-                'description' => "Ea eiusmod minim non consectetur eiusmod nulla duis. Adipisicing duis nostrud anim minim. Et ex minim nostrud ea ullamco. Quis ipsum anim enim qui dolor adipisicing. Ipsum sint velit minim enim incididunt amet tempor adipisicing sunt nulla.",
+                'description' => '',
                 'generic_code_id' => $generic_code_smpit,
             ],
         ];
