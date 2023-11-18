@@ -20,57 +20,57 @@ class GalerySeeder extends Seeder
         $galeri_tk = [
             [
                 'name' => 'Masa Orientasi Orang Tua (MOOT)',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_tkit
             ],
             [
                 'name' => 'Masa Orientasi Murid (MOM)',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_tkit
             ],
             [
                 'name' => 'Welcome Back',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_tkit
             ],
             [
                 'name' => 'Fun Cooking',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_tkit
             ],
             [
                 'name' => 'Fun Swimming',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_tkit
             ],
             [
                 'name' => 'Puncak Tema',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_tkit
             ],
             [
                 'name' => 'Assembly',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_tkit
             ],
             [
                 'name' => 'Outing Class',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_tkit
             ],
             [
                 'name' => 'Lomba Hari Kemerdekaan',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_tkit
             ],
             [
                 'name' => 'Field Trip',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_tkit
             ],
             [
                 'name' => 'Home Visit',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_tkit
             ],
         ];
@@ -78,67 +78,67 @@ class GalerySeeder extends Seeder
         $galeri_sd = [
             [
                 'name' => 'Masa Orientasi Orang Tua (MOOT)',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_sdit,
             ],
             [
                 'name' => 'Masa Orientasi Orang Murid (MOM)',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_sdit,
             ],
             [
                 'name' => 'Masa Orientasi Orang Murid (MOM)',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_sdit,
             ],
             [
                 'name' => 'Welcome Back',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_sdit,
             ],
             [
                 'name' => 'Kegiatan Islamic Day',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_sdit,
             ],
             [
                 'name' => 'Kegiatan Class Meeting',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_sdit,
             ],
             [
                 'name' => 'Projek Penguatan Profil Pelajar Pancasila (P5)',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_sdit,
             ],
             [
                 'name' => 'Fun Swimming',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_sdit,
             ],
             [
                 'name' => 'Assembly',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_sdit,
             ],
             [
                 'name' => 'Outing Class',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_sdit,
             ],
             [
                 'name' => 'Lomba Hari Kemerdekaan',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_sdit,
             ],
             [
                 'name' => 'Field Trip',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_sdit,
             ],
             [
                 'name' => 'Home Visit',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_sdit,
             ],
         ];
@@ -146,72 +146,72 @@ class GalerySeeder extends Seeder
         $galeri_smp = [
             [
                 'name' => 'Masa Orientasi Orang Tua (MOOT)',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_smpit,
             ],
             [
                 'name' => 'Masa Orientasi Orang Murid (MOM)',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_smpit,
             ],
             [
                 'name' => 'Welcome Back',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_smpit,
             ],
             [
                 'name' => 'Kegiatan Islamic Day',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_smpit,
             ],
             [
                 'name' => 'Pelatihan dan Pelantikan OSIS',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_smpit,
             ],
             [
                 'name' => 'Pelatihan dan Pelantikan OSIS',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_smpit,
             ],
             [
                 'name' => 'Projek Penguatan Profil Pelajar Pancasila (P5)',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_smpit,
             ],
             [
                 'name' => 'LDKS',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_smpit,
             ],
             [
                 'name' => 'Perkemahan Jumat Sabtu',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_smpit,
             ],
             [
                 'name' => 'Fun Swimming',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_smpit,
             ],
             [
                 'name' => 'Assembly',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_smpit,
             ],
             [
                 'name' => 'Lomba Hari Kemerdekaan',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_smpit,
             ],
             [
                 'name' => 'Field Trip',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_smpit,
             ],
             [
                 'name' => 'Home Visit',
-                'description' => '',
+                'description' => null,
                 'generic_code_id' => $generic_code_smpit,
             ],
         ];
