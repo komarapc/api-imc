@@ -28,7 +28,7 @@ class TestimonialController extends Controller
             $queryEmail = request()->query('email');
             $queryPhoneNumber = request()->query('phone_number');
             $queryPage = request()->query('page') ? request()->query('page') : 1;
-            $queryLimit = request()->query('limit') ? request()->query('limit') : 10;
+            $queryLimit = request()->query('limit') ? request()->query('limit') : $this->genereateResponse->limit;
 
             $queryResult = Testimonial::query();
             if ($queryName) {

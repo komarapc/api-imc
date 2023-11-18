@@ -5,10 +5,16 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Fasilitas;
 use App\Models\GenericCode;
+use App\Services\GenerateResponse;
 use Illuminate\Http\Request;
 
 class FasilitasController extends Controller
 {
+    protected $generateResponse;
+    public function __construct(GenerateResponse $generateResponse)
+    {
+        $this->generateResponse = $generateResponse;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -17,7 +23,7 @@ class FasilitasController extends Controller
         try {
             $queryJenjang = $request->query('jenjang');
             $queryFasilitas = $request->query('fasilitas');
-            $limit = $request->query('limit') ? $request->query('limit') : 25;
+            $limit = $request->query('limit') ? $request->query('limit') : $this->generateResponse->limit;
             $page = $request->query('page') ? $request->query('page') : 1;
             $offset = ($page - 1) * $limit;
 

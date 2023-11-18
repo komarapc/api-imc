@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\FasilitasGaleri;
+use App\Services\GenerateResponse;
 use Hidehalo\Nanoid\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -11,6 +12,11 @@ use Illuminate\Support\Facades\Log;
 
 class FasilitasGaleriController extends Controller
 {
+    protected $generateResponse;
+    public function __construct(GenerateResponse $generateResponse)
+    {
+        $this->generateResponse = $generateResponse;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -20,7 +26,7 @@ class FasilitasGaleriController extends Controller
             $queryFasilitasId = request()->query('fasilitas_id');
             $queryFileName = request()->query('file_name');
             $queryPage = request()->query('page') ? request()->query('page') : 1;
-            $queryLimit = request()->query('limit') ? request()->query('limit') : 12;
+            $queryLimit = request()->query('limit') ? request()->query('limit') : $this->generateResponse->limit;
             $queryResult = FasilitasGaleri::query();
             if ($queryFasilitasId) {
                 $queryResult = $queryResult->where('fasilitas_id', 'like', '%' . $queryFasilitasId . '%');

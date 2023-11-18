@@ -4,7 +4,7 @@ namespace App\Services;
 
 class GenerateResponse
 {
-
+  public $limit = 12;
   /**
    * @param $data
    * @param string $message

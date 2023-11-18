@@ -4,10 +4,16 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\GenericCode;
+use App\Services\GenerateResponse;
 use Illuminate\Http\Request;
 
 class GenericCodeController extends Controller
 {
+    protected $generateResponse;
+    public function __construct(GenerateResponse $generateResponse)
+    {
+        $this->generateResponse = $generateResponse;
+    }
     public function index(Request $request)
     {
         /**
@@ -16,7 +22,7 @@ class GenericCodeController extends Controller
         $genericCodeId = $request->query('gc_id');
         $genericCodeName = $request->query('generic_code_name');
         $page = $request->query('page') ? $request->query('page') : 1;
-        $limit = $request->query('limit') ? $request->query('limit') : 25;
+        $limit = $request->query('limit') ? $request->query('limit') : $this->generateResponse->limit;
         $sort = $request->query('sort');
         $sortDirection = $request->query('sort_direction');
 

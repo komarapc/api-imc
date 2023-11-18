@@ -5,10 +5,16 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Galery;
 use App\Models\GenericCode;
+use App\Services\GenerateResponse;
 use Illuminate\Http\Request;
 
 class GaleryController extends Controller
 {
+    protected $generateResponse;
+    public function __construct(GenerateResponse $generateResponse)
+    {
+        $this->generateResponse = $generateResponse;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -16,7 +22,7 @@ class GaleryController extends Controller
     {
         try {
             $queryName = request()->query('name');
-            $queryLimit = request()->query('limit') ? request()->query('limit') : 4;
+            $queryLimit = request()->query('limit') ? request()->query('limit') : $this->generateResponse->limit;
             $queryPage = request()->query('page') ? request()->query('page') : 1;
             $jenjang = request()->query('jenjang');
             $offset = ($queryPage - 1) * $queryLimit;
