@@ -13,23 +13,31 @@ class GenericCodeSeeder extends Seeder
      */
     public function run(): void
     {
-        GenericCode::create([
-            'generic_code_id' => '001',
-            'generic_code_name' =>  "Jenjang Pendidikan"
-        ]);
-        GenericCode::create([
-            'generic_code_id' => '001^001',
-            'generic_code_name' =>  "TKIT imc",
-        ]);
-        GenericCode::create([
-            'generic_code_id' => '001^002',
-            'generic_code_name' =>  "SDIT imc",
-        ]);
-        GenericCode::create([
-            'generic_code_id' => '001^003',
-            'generic_code_name' =>  "SMPIT imc",
-        ]);
-
+        $jenjang = [
+            [
+                'generic_code_id' => '001',
+                'generic_code_name' =>  "Jenjang Pendidikan"
+            ],
+            [
+                'generic_code_id' => '001^001',
+                'generic_code_name' =>  "TKIT imc",
+            ],
+            [
+                'generic_code_id' => '001^002',
+                'generic_code_name' =>  "SDIT imc",
+            ],
+            [
+                'generic_code_id' => '001^003',
+                'generic_code_name' =>  "SMPIT imc",
+            ],
+            [
+                'generic_code_id' => '001^004',
+                'generic_code_name' =>  "Yayasan imc",
+            ],
+        ];
+        foreach ($jenjang as $value) {
+            GenericCode::create($value);
+        }
         $article = [
             [
                 'generic_code_id' => '002',
@@ -37,7 +45,7 @@ class GenericCodeSeeder extends Seeder
             ],
             [
                 'generic_code_id' => '002^001',
-                'generic_code_name' =>  "Berita Artikel"
+                'generic_code_name' =>  "Berita dan Artikel"
             ],
             [
                 'generic_code_id' => '002^002',
