@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\FasilitasGaleri;
 use App\Models\GaleryFile;
+use App\Models\User;
 use App\Services\GenerateResponse;
 use Hidehalo\Nanoid\Client;
 use Illuminate\Http\Request;
@@ -103,6 +104,8 @@ class GaleryFilesController extends Controller
                 'error' => env('APP_DEBUG') ? $validator->errors() : null,
                 'success' => false,
             ], 400);
+            if (!$request->user() || User::find($request->user()->id))
+                return $this->generateResponse->response401('Unauthorized', 'You are unauthorized. Try to login first');
 
             $galeryFiles = [];
             foreach ($request['files'] as $file) {
@@ -260,7 +263,7 @@ class GaleryFilesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
         try {
             $galeryFile = GaleryFile::find($id);
@@ -270,6 +273,8 @@ class GaleryFilesController extends Controller
                 'message' => 'Fasilitas galeri not found',
                 'success' => false,
             ], 404);
+            if (!$request->user() || User::find($request->user()->id))
+                return $this->generateResponse->response401('Unauthorized', 'You are unauthorized. Try to login first');
             // delete file
             if (file_exists(public_path() . '/images/galeri/' . $galeryFile->file_name)) {
                 unlink(public_path() . '/images/galeri/' . $galeryFile->file_name);

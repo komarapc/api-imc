@@ -4,11 +4,18 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
+use App\Models\User;
+use App\Services\GenerateResponse;
 use Illuminate\Http\Request;
 use PhpParser\Node\Stmt\TryCatch;
 
 class BannerController extends Controller
 {
+    protected $generateResponse;
+    public function __construct(GenerateResponse $generateResponse)
+    {
+        $this->generateResponse = $generateResponse;
+    }
     public function index()
     {
         try {
@@ -33,6 +40,8 @@ class BannerController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            if (!$request->user() || User::find($request->user()->id))
+                return $this->generateResponse->response401('Unauthorized', 'You are unauthorized. Try to login first');
             $validator = validator($request->all(), [
                 'title' => 'required',
                 'description' => 'required',

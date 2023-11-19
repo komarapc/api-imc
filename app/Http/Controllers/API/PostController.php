@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post;
+use App\Models\User;
 use App\Services\Base64Services;
 use App\Services\GenerateResponse;
 use Illuminate\Http\Request;
@@ -84,6 +85,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
         try {
+
             $rules = [
                 'title' => 'required|string',
                 'content' => 'required|string',
@@ -96,12 +98,16 @@ class PostController extends Controller
             $validator = validator($request->all(), $rules);
             if ($validator->fails())
                 return $this->generateResponse->response400('Bad Request', $validator->errors());
+            // check if user is exist
+            if (!$request->user() || !User::find($request->user()->id))
+                return $this->generateResponse->response401('Unauthorized', 'You are unauthorized. Try to login first');
             // validate image
             if (!$this->base64Services->validateBase64($request->image))
                 return $this->generateResponse->response400('Bad Request', 'Image is not valid');
             // validate max size image 500kB
             if ($this->base64Services->base64Size($request->image) > 500)
                 return $this->generateResponse->response400('Bad Request', 'Image is too large');
+
             $image = $this->base64Services->uploadImage($this->base64Services->base64StringOnly($request->image), '/images/posts/');
             $post = new Post();
             $post->title = $request->title;
@@ -116,7 +122,7 @@ class PostController extends Controller
             $post->save();
             return $this->generateResponse->response201($post, 'Berhasil ditambahkan');
         } catch (\Throwable $th) {
-            $this->base64Services->deleteFileContent($image->file_path);
+            if ($image) $this->base64Services->deleteFileContent($image->file_path);
             return $this->generateResponse->response500('Internal Server Error', env('APP_DEBUG') ? $th->getMessage() : null);
         }
     }

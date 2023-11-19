@@ -48,6 +48,28 @@ class GenerateResponse
     ], 400);
   }
 
+  public function response401($message = 'Unauthorized', $error = null)
+  {
+    return response()->json([
+      'statusCode' => 401,
+      'statusMessage' => 'UNAUTHORIZED',
+      'message' => $message,
+      'error' => $error,
+      'success' => false,
+    ], 401);
+  }
+
+  public function response403($message = 'Forbidden', $error = null)
+  {
+    return response()->json([
+      'statusCode' => 403,
+      'statusMessage' => 'FORBIDDEN',
+      'message' => $message,
+      'error' => $error,
+      'success' => false,
+    ], 403);
+  }
+
   public function response404($message = 'Not Found', $error = null)
   {
     return response()->json([

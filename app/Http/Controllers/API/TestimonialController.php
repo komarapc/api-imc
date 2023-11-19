@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Testimonial;
+use App\Models\User;
 use App\Services\Base64Services;
 use App\Services\GenerateResponse;
 use Illuminate\Http\Request;
@@ -94,19 +95,17 @@ class TestimonialController extends Controller
         try {
             $validateRequest = $this->validateRequest($request);
             if ($validateRequest) return $validateRequest;
-
-
-
             if ($request->image) {
                 // check if image is base64
                 $validateImage = $this->validateImage($request->image);
                 if ($validateImage) return $validateImage;
-
                 $imageBase64 = preg_replace('/^data:image\/(\w+);base64,/', '', $request->image);
                 $imageBase64 = str_replace(' ', '+', $imageBase64);
                 $uploadPath = '/images/testimoni/';
                 $image = $this->base64Services->uploadImage($imageBase64, $uploadPath);
             }
+            if (!$request->user() || User::find($request->user()->id))
+                return $this->genereateResponse->response401('Unauthorized', 'You are unauthorized. Try to login first');
             $testimonials = new Testimonial();
             $testimonials->full_name = $request->full_name;
             $testimonials->content = $request->content;
@@ -191,18 +190,16 @@ class TestimonialController extends Controller
                 'error' => null,
                 'success' => false
             ], 404);
-
+            if (!$request->user() || User::find($request->user()->id))
+                return $this->genereateResponse->response401('Unauthorized', 'You are unauthorized. Try to login first');
             $previoesTestimonials = clone $testimonials;
-
             $validateRequest = $this->validateRequest($request);
             if ($validateRequest) return $validateRequest;
-
             // check if image is base64
             if ($request->image) {
                 $validateImage = $this->validateImage($request->image);
                 if ($validateImage) return $validateImage;
             }
-
             if ($request->image) {
                 $imageBase64 = preg_replace('/^data:image\/(\w+);base64,/', '', $request->image);
                 $imageBase64 = str_replace(' ', '+', $imageBase64);
@@ -217,12 +214,10 @@ class TestimonialController extends Controller
             $testimonials->phone_number = $request->phone_number;
             $testimonials->save();
             DB::commit();
-
             if ($testimonials->save() && $request->image) {
                 $file_path = public_path('images/testimoni/' . $previoesTestimonials->image);
                 $this->base64Services->deleteFileContent($file_path);
             }
-
             // return response 200
             return response()->json([
                 'statusCode' => 200,
@@ -242,7 +237,7 @@ class TestimonialController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
         try {
             $testimonials = Testimonial::find($id);
@@ -253,6 +248,8 @@ class TestimonialController extends Controller
                 'error' => null,
                 'success' => false
             ], 404);
+            if (!$request->user() || User::find($request->user()->id))
+                return $this->genereateResponse->response401('Unauthorized', 'You are unauthorized. Try to login first');
 
             $testimonials->delete();
 
@@ -274,7 +271,7 @@ class TestimonialController extends Controller
         }
     }
 
-    public function deleteImageTestimonial(string $id)
+    public function deleteImageTestimonial(Request $request, string $id)
     {
         try {
             $testimonials = Testimonial::find($id);
@@ -286,7 +283,8 @@ class TestimonialController extends Controller
                 'error' => null,
                 'success' => false
             ], 404);
-
+            if (!$request->user() || User::find($request->user()->id))
+                return $this->genereateResponse->response401('Unauthorized', 'You are unauthorized. Try to login first');
             $file_name = $testimonials->image;
             $testimonials->image = null;
             $testimonials->image_url = null;

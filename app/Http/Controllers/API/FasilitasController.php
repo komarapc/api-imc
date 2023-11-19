@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Fasilitas;
 use App\Models\GenericCode;
+use App\Models\User;
 use App\Services\GenerateResponse;
 use Illuminate\Http\Request;
 
@@ -96,7 +97,8 @@ class FasilitasController extends Controller
     public function store(Request $request)
     {
         try {
-
+            if (!$request->user() || User::find($request->user()->id))
+                return $this->generateResponse->response401('Unauthorized', 'You are unauthorized. Try to login first');
             $validator = validator($request->all(), [
                 'name' => 'required',
                 'description' => 'sometimes|nullable', //optional,
@@ -195,6 +197,8 @@ class FasilitasController extends Controller
     public function update(Request $request, string $id)
     {
         try {
+            if (!$request->user() || User::find($request->user()->id))
+                return $this->generateResponse->response401('Unauthorized', 'You are unauthorized. Try to login first');
             $validator = validator($request->all(), [
                 'name' => 'required',
                 'description' => 'required',
@@ -255,9 +259,11 @@ class FasilitasController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
         try {
+            if (!$request->user() || User::find($request->user()->id))
+                return $this->generateResponse->response401('Unauthorized', 'You are unauthorized. Try to login first');
             $fasilitas = Fasilitas::find($id);
             if (!$fasilitas) return response()->json([
                 'statusCode'    => 404,

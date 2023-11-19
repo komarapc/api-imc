@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\FasilitasGaleri;
+use App\Models\User;
 use App\Services\GenerateResponse;
 use Hidehalo\Nanoid\Client;
 use Illuminate\Http\Request;
@@ -87,6 +88,8 @@ class FasilitasGaleriController extends Controller
          * Arrau Object {file_name, base64} files
          */
         try {
+            if (!$request->user() || User::find($request->user()->id))
+                return $this->generateResponse->response401('Unauthorized', 'You are unauthorized. Try to login first');
             DB::beginTransaction();
             $rules = [
                 'fasilitas_id' => 'required|string',
@@ -259,9 +262,11 @@ class FasilitasGaleriController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
         try {
+            if (!$request->user() || User::find($request->user()->id))
+                return $this->generateResponse->response401('Unauthorized', 'You are unauthorized. Try to login first');
             $fasilitasGaleri = FasilitasGaleri::find($id);
             if (!$fasilitasGaleri) return response()->json([
                 'statusCode' => 404,

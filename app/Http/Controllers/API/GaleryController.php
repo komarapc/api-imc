@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Galery;
 use App\Models\GenericCode;
+use App\Models\User;
 use App\Services\GenerateResponse;
 use Illuminate\Http\Request;
 
@@ -84,6 +85,8 @@ class GaleryController extends Controller
     public function store(Request $request)
     {
         try {
+            if (!$request->user() || User::find($request->user()->id))
+                return $this->generateResponse->response401('Unauthorized', 'You are unauthorized. Try to login first');
             $validator = validator($request->all(), [
                 'name' => 'required',
                 'description' => 'sometimes|nullable',
@@ -165,6 +168,8 @@ class GaleryController extends Controller
     public function update(Request $request, string $id)
     {
         try {
+            if (!$request->user() || User::find($request->user()->id))
+                return $this->generateResponse->response401('Unauthorized', 'You are unauthorized. Try to login first');
             $galery = Galery::find($id);
             if (!$galery) {
                 return response()->json([
@@ -213,9 +218,11 @@ class GaleryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
         try {
+            if (!$request->user() || User::find($request->user()->id))
+                return $this->generateResponse->response401('Unauthorized', 'You are unauthorized. Try to login first');
             $galery = Galery::find($id);
             if (!$galery) {
                 return response()->json([
