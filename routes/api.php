@@ -7,6 +7,7 @@ use App\Http\Controllers\API\FasilitasGaleriController;
 use App\Http\Controllers\API\GaleryFilesController;
 use App\Http\Controllers\API\GenericCodeController;
 use App\Http\Controllers\API\GaleryController;
+use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\TestimonialController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -85,6 +86,16 @@ Route::middleware('bearerToken')->group(function () {
         Route::put('/testimoni/{id}', 'update')->name('update');
         Route::delete('/testimoni/{id}', 'destroy')->name('destroy');
         Route::delete('/testimoni/{id}/avatar', 'deleteImageTestimonial')->name('destroy-avatar');
+    });
+
+    Route::controller(PostController::class)->name('post.')->group(function () {
+        Route::get('/post', 'index')->name('index')->withoutMiddleware('bearerToken');
+        Route::get('/post/{id}', 'show')->name('show')->withoutMiddleware('bearerToken');
+        Route::get('/post/{slug}/read', 'read')->name('read')->withoutMiddleware('bearerToken');
+        Route::post('/post', 'store')->name('store');
+        Route::put('/post/{id}', 'update')->name('update');
+        Route::delete('/post/{id}', 'destroy')->name('destroy');
+        Route::patch('/post/{id}/publish', 'publish')->name('publish');
     });
 });
 Route::prefix('statistik')->name('statistik.')->group(function () {

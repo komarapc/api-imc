@@ -37,6 +37,28 @@ class GenerateResponse
     ], 201);
   }
 
+  public function response400($message = 'Bad Request', $error = null)
+  {
+    return response()->json([
+      'statusCode' => 400,
+      'statusMessage' => 'BAD_REQUEST',
+      'message' => $message,
+      'error' => $error,
+      'success' => false,
+    ], 400);
+  }
+
+  public function response404($message = 'Not Found', $error = null)
+  {
+    return response()->json([
+      'statusCode' => 404,
+      'statusMessage' => 'NOT_FOUND',
+      'message' => $message,
+      'error' => $error,
+      'success' => false,
+    ], 404);
+  }
+
   public function response500($message = 'Internal Server Error', $error = null)
   {
     return response()->json([

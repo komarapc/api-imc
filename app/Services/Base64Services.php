@@ -54,4 +54,36 @@ class Base64Services
       unlink($path_file);
     }
   }
+
+  public function validateBase64(string $base64String)
+  {
+    $base64String = str_replace(' ', '+', $base64String);
+    $data = explode(',', $base64String);
+    $file = base64_decode($data[1]);
+    $f = finfo_open();
+    $mime_type = finfo_buffer($f, $file, FILEINFO_MIME_TYPE);
+    $mime_type = explode('/', $mime_type);
+    if ($mime_type[0] == 'image') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public function base64Size(string $base64String)
+  {
+    $base64String = str_replace(' ', '+', $base64String);
+    $data = explode(',', $base64String);
+    $file = base64_decode($data[1]);
+    $size = strlen($file);
+    $size = $size / 1024;
+    return $size;
+  }
+
+  public function base64StringOnly(string $base64String)
+  {
+    $imageBase64 = preg_replace('/^data:image\/(\w+);base64,/', '', $base64String);
+    $imageBase64 = str_replace(' ', '+', $imageBase64);
+    return $imageBase64;
+  }
 }
