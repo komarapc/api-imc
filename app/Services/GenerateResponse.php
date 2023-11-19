@@ -48,7 +48,7 @@ class GenerateResponse
     ], 400);
   }
 
-  public function response401($message = 'Unauthorized', $error = null)
+  public function response401($message = 'Unauthorized. Try to login first', $error = null)
   {
     return response()->json([
       'statusCode' => 401,

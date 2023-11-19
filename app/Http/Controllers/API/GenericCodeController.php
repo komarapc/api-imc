@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\GenericCode;
+use App\Models\User;
 use App\Services\GenerateResponse;
 use Illuminate\Http\Request;
 
@@ -109,7 +110,8 @@ class GenericCodeController extends Controller
     public function store(Request $request)
     {
         try {
-
+            if (!$request->user() || !User::find($request->user()->id))
+                return $this->generateResponse->response401();
             $validator = validator($request->all(), [
                 'generic_code_id' => 'required|unique:generic_codes,generic_code_id',
                 'generic_code_name' => 'required',
@@ -150,6 +152,8 @@ class GenericCodeController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            if (!$request->user() || !User::find($request->user()->id))
+                return $this->generateResponse->response401();
             $validator = validator($request->all(), [
                 'generic_code_name' => 'required',
             ]);
@@ -191,9 +195,11 @@ class GenericCodeController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         try {
+            if (!$request->user() || !User::find($request->user()->id))
+                return $this->generateResponse->response401();
             $genericCode = GenericCode::find($id);
             if (!$genericCode) {
                 return response()->json([

@@ -86,7 +86,7 @@ class GaleryController extends Controller
     {
         try {
             if (!$request->user() || User::find($request->user()->id))
-                return $this->generateResponse->response401('Unauthorized', 'You are unauthorized. Try to login first');
+                return $this->generateResponse->response401();
             $validator = validator($request->all(), [
                 'name' => 'required',
                 'description' => 'sometimes|nullable',
@@ -169,7 +169,7 @@ class GaleryController extends Controller
     {
         try {
             if (!$request->user() || User::find($request->user()->id))
-                return $this->generateResponse->response401('Unauthorized', 'You are unauthorized. Try to login first');
+                return $this->generateResponse->response401();
             $galery = Galery::find($id);
             if (!$galery) {
                 return response()->json([
@@ -222,7 +222,7 @@ class GaleryController extends Controller
     {
         try {
             if (!$request->user() || User::find($request->user()->id))
-                return $this->generateResponse->response401('Unauthorized', 'You are unauthorized. Try to login first');
+                return $this->generateResponse->response401();
             $galery = Galery::find($id);
             if (!$galery) {
                 return response()->json([

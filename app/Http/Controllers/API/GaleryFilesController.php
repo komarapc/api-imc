@@ -105,7 +105,7 @@ class GaleryFilesController extends Controller
                 'success' => false,
             ], 400);
             if (!$request->user() || User::find($request->user()->id))
-                return $this->generateResponse->response401('Unauthorized', 'You are unauthorized. Try to login first');
+                return $this->generateResponse->response401();
 
             $galeryFiles = [];
             foreach ($request['files'] as $file) {
@@ -274,7 +274,7 @@ class GaleryFilesController extends Controller
                 'success' => false,
             ], 404);
             if (!$request->user() || User::find($request->user()->id))
-                return $this->generateResponse->response401('Unauthorized', 'You are unauthorized. Try to login first');
+                return $this->generateResponse->response401();
             // delete file
             if (file_exists(public_path() . '/images/galeri/' . $galeryFile->file_name)) {
                 unlink(public_path() . '/images/galeri/' . $galeryFile->file_name);

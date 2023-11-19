@@ -93,6 +93,8 @@ class TestimonialController extends Controller
     public function store(Request $request)
     {
         try {
+            if (!$request->user() || User::find($request->user()->id))
+                return $this->genereateResponse->response401();
             $validateRequest = $this->validateRequest($request);
             if ($validateRequest) return $validateRequest;
             if ($request->image) {
@@ -104,8 +106,6 @@ class TestimonialController extends Controller
                 $uploadPath = '/images/testimoni/';
                 $image = $this->base64Services->uploadImage($imageBase64, $uploadPath);
             }
-            if (!$request->user() || User::find($request->user()->id))
-                return $this->genereateResponse->response401('Unauthorized', 'You are unauthorized. Try to login first');
             $testimonials = new Testimonial();
             $testimonials->full_name = $request->full_name;
             $testimonials->content = $request->content;
@@ -191,7 +191,7 @@ class TestimonialController extends Controller
                 'success' => false
             ], 404);
             if (!$request->user() || User::find($request->user()->id))
-                return $this->genereateResponse->response401('Unauthorized', 'You are unauthorized. Try to login first');
+                return $this->genereateResponse->response401();
             $previoesTestimonials = clone $testimonials;
             $validateRequest = $this->validateRequest($request);
             if ($validateRequest) return $validateRequest;

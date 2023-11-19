@@ -98,7 +98,7 @@ class FasilitasController extends Controller
     {
         try {
             if (!$request->user() || User::find($request->user()->id))
-                return $this->generateResponse->response401('Unauthorized', 'You are unauthorized. Try to login first');
+                return $this->generateResponse->response401();
             $validator = validator($request->all(), [
                 'name' => 'required',
                 'description' => 'sometimes|nullable', //optional,
@@ -198,7 +198,7 @@ class FasilitasController extends Controller
     {
         try {
             if (!$request->user() || User::find($request->user()->id))
-                return $this->generateResponse->response401('Unauthorized', 'You are unauthorized. Try to login first');
+                return $this->generateResponse->response401();
             $validator = validator($request->all(), [
                 'name' => 'required',
                 'description' => 'required',
@@ -263,7 +263,7 @@ class FasilitasController extends Controller
     {
         try {
             if (!$request->user() || User::find($request->user()->id))
-                return $this->generateResponse->response401('Unauthorized', 'You are unauthorized. Try to login first');
+                return $this->generateResponse->response401();
             $fasilitas = Fasilitas::find($id);
             if (!$fasilitas) return response()->json([
                 'statusCode'    => 404,

@@ -26,7 +26,7 @@ class BearerTokenMiddleware
             return response()->json([
                 'statusCode' => 401,
                 'statusMessage' => 'UNAUTHORIZED',
-                'message' => 'Unauthorized',
+                'message' => 'Unauthorized. Try to login first',
                 'success' => false,
             ], 401);
         }

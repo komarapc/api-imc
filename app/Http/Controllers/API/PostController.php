@@ -85,7 +85,8 @@ class PostController extends Controller
     public function store(Request $request)
     {
         try {
-
+            if (!$request->user() || !User::find($request->user()->id))
+                return $this->generateResponse->response401();
             $rules = [
                 'title' => 'required|string',
                 'content' => 'required|string',
@@ -99,8 +100,7 @@ class PostController extends Controller
             if ($validator->fails())
                 return $this->generateResponse->response400('Bad Request', $validator->errors());
             // check if user is exist
-            if (!$request->user() || !User::find($request->user()->id))
-                return $this->generateResponse->response401('Unauthorized', 'You are unauthorized. Try to login first');
+
             // validate image
             if (!$this->base64Services->validateBase64($request->image))
                 return $this->generateResponse->response400('Bad Request', 'Image is not valid');

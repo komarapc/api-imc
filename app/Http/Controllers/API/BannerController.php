@@ -41,7 +41,7 @@ class BannerController extends Controller
     {
         try {
             if (!$request->user() || User::find($request->user()->id))
-                return $this->generateResponse->response401('Unauthorized', 'You are unauthorized. Try to login first');
+                return $this->generateResponse->response401();
             $validator = validator($request->all(), [
                 'title' => 'required',
                 'description' => 'required',

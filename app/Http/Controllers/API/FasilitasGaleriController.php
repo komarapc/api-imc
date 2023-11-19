@@ -89,7 +89,7 @@ class FasilitasGaleriController extends Controller
          */
         try {
             if (!$request->user() || User::find($request->user()->id))
-                return $this->generateResponse->response401('Unauthorized', 'You are unauthorized. Try to login first');
+                return $this->generateResponse->response401();
             DB::beginTransaction();
             $rules = [
                 'fasilitas_id' => 'required|string',
@@ -266,7 +266,7 @@ class FasilitasGaleriController extends Controller
     {
         try {
             if (!$request->user() || User::find($request->user()->id))
-                return $this->generateResponse->response401('Unauthorized', 'You are unauthorized. Try to login first');
+                return $this->generateResponse->response401();
             $fasilitasGaleri = FasilitasGaleri::find($id);
             if (!$fasilitasGaleri) return response()->json([
                 'statusCode' => 404,
