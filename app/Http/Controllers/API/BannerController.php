@@ -40,7 +40,7 @@ class BannerController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            if (!$request->user() || User::find($request->user()->id))
+            if (!$request->user() || !User::find($request->user()->id))
                 return $this->generateResponse->response401();
             $validator = validator($request->all(), [
                 'title' => 'required',

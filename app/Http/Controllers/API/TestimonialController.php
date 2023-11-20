@@ -93,7 +93,7 @@ class TestimonialController extends Controller
     public function store(Request $request)
     {
         try {
-            if (!$request->user() || User::find($request->user()->id))
+            if (!$request->user() || !User::find($request->user()->id))
                 return $this->genereateResponse->response401();
             $validateRequest = $this->validateRequest($request);
             if ($validateRequest) return $validateRequest;
@@ -190,7 +190,7 @@ class TestimonialController extends Controller
                 'error' => null,
                 'success' => false
             ], 404);
-            if (!$request->user() || User::find($request->user()->id))
+            if (!$request->user() || !User::find($request->user()->id))
                 return $this->genereateResponse->response401();
             $previoesTestimonials = clone $testimonials;
             $validateRequest = $this->validateRequest($request);
@@ -248,7 +248,7 @@ class TestimonialController extends Controller
                 'error' => null,
                 'success' => false
             ], 404);
-            if (!$request->user() || User::find($request->user()->id))
+            if (!$request->user() || !User::find($request->user()->id))
                 return $this->genereateResponse->response401('Unauthorized', 'You are unauthorized. Try to login first');
 
             $testimonials->delete();
@@ -283,7 +283,7 @@ class TestimonialController extends Controller
                 'error' => null,
                 'success' => false
             ], 404);
-            if (!$request->user() || User::find($request->user()->id))
+            if (!$request->user() || !User::find($request->user()->id))
                 return $this->genereateResponse->response401('Unauthorized', 'You are unauthorized. Try to login first');
             $file_name = $testimonials->image;
             $testimonials->image = null;

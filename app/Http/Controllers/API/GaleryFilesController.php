@@ -104,7 +104,7 @@ class GaleryFilesController extends Controller
                 'error' => env('APP_DEBUG') ? $validator->errors() : null,
                 'success' => false,
             ], 400);
-            if (!$request->user() || User::find($request->user()->id))
+            if (!$request->user() || !User::find($request->user()->id))
                 return $this->generateResponse->response401();
 
             $galeryFiles = [];
@@ -273,7 +273,7 @@ class GaleryFilesController extends Controller
                 'message' => 'Fasilitas galeri not found',
                 'success' => false,
             ], 404);
-            if (!$request->user() || User::find($request->user()->id))
+            if (!$request->user() || !User::find($request->user()->id))
                 return $this->generateResponse->response401();
             // delete file
             if (file_exists(public_path() . '/images/galeri/' . $galeryFile->file_name)) {

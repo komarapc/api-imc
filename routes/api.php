@@ -95,11 +95,15 @@ Route::middleware('bearerToken')->group(function () {
         Route::post('/post', 'store')->name('store');
         Route::put('/post/{id}', 'update')->name('update');
         Route::delete('/post/{id}', 'destroy')->name('destroy');
-        Route::patch('/post/{id}/publish', 'publish')->name('publish');
+        Route::post('/post/{id}/publish', 'publish')->name('publish');
     });
 });
 Route::prefix('statistik')->name('statistik.')->group(function () {
     Route::get('/fasilitas', [FasilitasController::class, 'statistic'])->name('fasilitas');
     Route::get('/galeri', [GaleryController::class, 'statistic'])->name('galery');
     Route::get('/testimoni', [TestimonialController::class, 'statistic'])->name('testimoni');
+    Route::prefix('post')->name('post.')->controller(PostController::class)->group(function () {
+        Route::get('/', 'statistic')->name('index');
+        ROute::get('/kategori', 'statisticByCategory')->name('category');
+    });
 });

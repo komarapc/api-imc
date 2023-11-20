@@ -85,7 +85,7 @@ class GaleryController extends Controller
     public function store(Request $request)
     {
         try {
-            if (!$request->user() || User::find($request->user()->id))
+            if (!$request->user() || !User::find($request->user()->id))
                 return $this->generateResponse->response401();
             $validator = validator($request->all(), [
                 'name' => 'required',
@@ -168,7 +168,7 @@ class GaleryController extends Controller
     public function update(Request $request, string $id)
     {
         try {
-            if (!$request->user() || User::find($request->user()->id))
+            if (!$request->user() || !User::find($request->user()->id))
                 return $this->generateResponse->response401();
             $galery = Galery::find($id);
             if (!$galery) {
@@ -221,7 +221,7 @@ class GaleryController extends Controller
     public function destroy(Request $request, string $id)
     {
         try {
-            if (!$request->user() || User::find($request->user()->id))
+            if (!$request->user() || !User::find($request->user()->id))
                 return $this->generateResponse->response401();
             $galery = Galery::find($id);
             if (!$galery) {

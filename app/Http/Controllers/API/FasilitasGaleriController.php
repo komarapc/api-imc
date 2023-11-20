@@ -88,7 +88,7 @@ class FasilitasGaleriController extends Controller
          * Arrau Object {file_name, base64} files
          */
         try {
-            if (!$request->user() || User::find($request->user()->id))
+            if (!$request->user() || !User::find($request->user()->id))
                 return $this->generateResponse->response401();
             DB::beginTransaction();
             $rules = [
@@ -265,7 +265,7 @@ class FasilitasGaleriController extends Controller
     public function destroy(Request $request, string $id)
     {
         try {
-            if (!$request->user() || User::find($request->user()->id))
+            if (!$request->user() || !User::find($request->user()->id))
                 return $this->generateResponse->response401();
             $fasilitasGaleri = FasilitasGaleri::find($id);
             if (!$fasilitasGaleri) return response()->json([

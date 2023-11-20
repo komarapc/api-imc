@@ -56,11 +56,11 @@ class PostController extends Controller
             $prevPage = $queryPage - 1 ? $queryPage - 1 : null;
             $nextPage = $currentPage < $totalPage ? $currentPage + 1 : null;
             $pagination = [
-                'total_data' => $totalData,
-                'total_page' => $totalPage,
-                'current_page' => $currentPage,
-                'prev_page' => $prevPage,
-                'next_page' => $nextPage,
+                'total_data' => (int)$totalData,
+                'total_page' => (int)$totalPage,
+                'current_page' => (int)$currentPage,
+                'prev_page' => (int)$prevPage,
+                'next_page' => (int)$nextPage,
             ];
             return $this->generateResponse->response200([
                 'posts' => $data,
@@ -132,7 +132,17 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            $post = Post::where('id', $id)
+                ->with(['typePost', 'category', 'status', 'postedBy'])
+                ->first();
+            if (!$post)
+                return $this->generateResponse->response404();
+
+            return $this->generateResponse->response200($post, 'Success');
+        } catch (\Throwable $th) {
+            return $this->generateResponse->response500('Internal Server Error', env('APP_DEBUG') ? $th->getMessage() : null);
+        }
     }
 
     /**
@@ -148,19 +158,129 @@ class PostController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            if (!request()->user() || !User::find(request()->user()->id))
+                return $this->generateResponse->response401();
+            $rules = [
+                'title' => 'required|string',
+                'content' => 'required|string',
+                'type_post_id' => 'required|exists:generic_codes,generic_code_id',
+                'category_id' => 'required|exists:generic_codes,generic_code_id',
+                'status_id' => 'required|exists:generic_codes,generic_code_id',
+                // 'posted_by' => 'required|exists:users,id',
+            ];
+            $validator = validator($request->all(), $rules);
+            if ($validator->fails())
+                return $this->generateResponse->response400('Invalid Data', $validator->errors());
+            // check if user is exist
+            $post = Post::find($id);
+            if (!$post)
+                return $this->generateResponse->response404();
+            $user = User::find(request()->user()->id);
+            if (!$user)
+                return $this->generateResponse->response404('User not found');
+            // validate image\
+            if ($request->image) {
+                if (!$this->base64Services->validateBase64($request->image))
+                    return $this->generateResponse->response400('Bad Request', 'Image is not valid');
+                // validate max size image 500kB
+                if ($this->base64Services->base64Size($request->image) > 500)
+                    return $this->generateResponse->response400('Bad Request', 'Image is too large');
+                $image = $this->base64Services->uploadImage($this->base64Services->base64StringOnly($request->image), '/images/posts/');
+                $post->image = $image->file_name;
+                $post->image_url = $image->file_url;
+            }
+            $post->title = $request->title;
+            $post->slug = Str::slug($request->title);
+            $post->content = $request->content;
+            $post->type_post_id = $request->type_post_id;
+            $post->category_id = $request->category_id;
+            $post->status_id = $request->status_id;
+            $post->updated_by = $user->id;
+            $post->save();
+            return $this->generateResponse->response200($post, 'Berhasil diupdate');
+        } catch (\Throwable $th) {
+            if ($image) $this->base64Services->deleteFileContent($image->file_path);
+            return $this->generateResponse->response500('Internal Server Error', env('APP_DEBUG') ? $th->getMessage() : null);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
-        //
+        try {
+            $post = Post::find($id);
+            if (!$post)
+                return $this->generateResponse->response404();
+            $user = User::find($request->user()->id);
+            if (!$user)
+                return $this->generateResponse->response403();
+            $post->deleted_by = $user->id;
+            $post->save();
+            $post->delete();
+            return $this->generateResponse->response200($post, 'Berhasil dihapus');
+        } catch (\Throwable $th) {
+            return $this->generateResponse->response500('Internal Server Error', env('APP_DEBUG') ? $th->getMessage() : null);
+        }
     }
 
     public function read(string $slug)
     {
-        //
+        try {
+            $post = Post::where('slug', $slug)
+                ->with(['typePost', 'category', 'status', 'postedBy'])
+                ->first();
+            if (!$post)
+                return $this->generateResponse->response404();
+            return $this->generateResponse->response200($post, 'Success');
+        } catch (\Throwable $th) {
+            return $this->generateResponse->response500('Internal Server Error', env('APP_DEBUG') ? $th->getMessage() : null);
+        }
+    }
+
+    public function publish(Request $request, $id)
+    {
+        try {
+            $post = Post::find($id);
+            if (!$post)
+                return $this->generateResponse->response404();
+            $user = User::find($request->user()->id);
+            if (!$user)
+                return $this->generateResponse->response403();
+            $post->status_id = '003^002';
+            $post->save();
+            return $this->generateResponse->response200($post, 'Berhasil dipublish');
+        } catch (\Throwable $th) {
+            return $this->generateResponse->response500('Internal Server Error', env('APP_DEBUG') ? $th->getMessage() : null);
+        }
+    }
+
+    public function statistic()
+    {
+        try {
+            $post = Post::query();
+            $post->selectRaw('count(*) as total, status_id');
+            $post->groupBy('status_id');
+            $post->with(['status']);
+            $data = $post->get();
+            return $this->generateResponse->response200($data, 'Success');
+        } catch (\Throwable $th) {
+            return $this->generateResponse->response500('Internal Server Error', env('APP_DEBUG') ? $th->getMessage() : null);
+        }
+    }
+
+    public function statisticByCategory(){
+        try {
+            $post = Post::query();
+            $post->selectRaw('count(*) as total, category_id');
+            $post->groupBy('category_id');
+            $post->with(['category']);
+            $data = $post->get();
+            return $this->generateResponse->response200($data, 'Success');
+        } catch (\Throwable $th) {
+            return $this->generateResponse->response500('Internal Server Error', env('APP_DEBUG') ? $th->getMessage() : null);   
+        }
     }
 }
