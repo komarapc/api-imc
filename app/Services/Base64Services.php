@@ -14,7 +14,7 @@ class Base64Services
    */
   public function uploadImage(string $base64String, string $path)
   {
-    $extension = self::getBase64FileExtension($base64String);
+    $extension = $this->getBase64FileExtension($base64String);
     $image = base64_decode($base64String);
     $nanoid = new Client();
     $imageName =  time() . '_' . $nanoid->generateId(21) . '.' . $extension;
@@ -85,5 +85,22 @@ class Base64Services
     $imageBase64 = preg_replace('/^data:image\/(\w+);base64,/', '', $base64String);
     $imageBase64 = str_replace(' ', '+', $imageBase64);
     return $imageBase64;
+  }
+
+  /**
+   * Get file extension from base64 string
+   * @param string $base64String
+   * @param data:image/jpeg;base64,...
+   * @return string
+   */
+  public function fileExtension(string $base64String)
+  {
+    $base64String = str_replace(' ', '+', $base64String);
+    $data = explode(',', $base64String);
+    $file = base64_decode($data[1]);
+    $f = finfo_open();
+    $mime_type = finfo_buffer($f, $file, FILEINFO_MIME_TYPE);
+    $mime_type = explode('/', $mime_type);
+    return $mime_type[1];
   }
 }

@@ -8,6 +8,8 @@ use App\Http\Controllers\API\GaleryFilesController;
 use App\Http\Controllers\API\GenericCodeController;
 use App\Http\Controllers\API\GaleryController;
 use App\Http\Controllers\API\PostController;
+use App\Http\Controllers\API\PpdbAlurPendaftaranController;
+use App\Http\Controllers\API\PpdbBrosurController;
 use App\Http\Controllers\API\TestimonialController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -96,6 +98,22 @@ Route::middleware('bearerToken')->group(function () {
         Route::put('/post/{id}', 'update')->name('update');
         Route::delete('/post/{id}', 'destroy')->name('destroy');
         Route::post('/post/{id}/publish', 'publish')->name('publish');
+    });
+    Route::prefix('ppdb')->name('ppdb.')->group(function () {
+        Route::controller(PpdbAlurPendaftaranController::class)->name('alur-pendaftaran.')->group(function () {
+            Route::get('/alur-pendaftaran', 'index')->name('index')->withoutMiddleware('bearerToken');
+            Route::get('/alur-pendaftaran/{id}', 'show')->name('show')->withoutMiddleware('bearerToken');
+            Route::post('/alur-pendaftaran', 'store')->name('store');
+            Route::put('/alur-pendaftaran/{id}', 'update')->name('update');
+            Route::delete('/alur-pendaftaran/{id}', 'destroy')->name('destroy');
+        });
+        Route::controller(PpdbBrosurController::class)->name('brosur.')->group(function () {
+            Route::get('/brosur', 'index')->name('index')->withoutMiddleware('bearerToken');
+            Route::get('/brosur/{id}', 'show')->name('show')->withoutMiddleware('bearerToken');
+            Route::post('/brosur', 'store')->name('store');
+            Route::put('/brosur/{id}', 'update')->name('update');
+            Route::delete('/brosur/{id}', 'destroy')->name('destroy');
+        });
     });
 });
 Route::prefix('statistik')->name('statistik.')->group(function () {
