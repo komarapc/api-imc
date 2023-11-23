@@ -30,6 +30,18 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::post('/auth', [AuthController::class, 'auth'])->name('auth');
+Route::get('/', function () {
+    return response()->json([
+        'statusCode' => 200,
+        'statusMessage' => "OK",
+        'message' => 'Success',
+        'success' => true,
+        'data' => [
+            'api_version' => '1.0.0',
+            'api_name' => 'Insan Mandiri Cendekia API',
+        ]
+    ], 200);
+});
 
 
 Route::middleware('bearerToken')->group(function () {
