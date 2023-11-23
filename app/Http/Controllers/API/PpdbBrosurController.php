@@ -121,6 +121,15 @@ class PpdbBrosurController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            if (!request()->user() || !User::find(request()->user()->id))
+                return $this->generateResponse->response401();
+            $brosur = PpdbBrosur::find($id);
+            if (!$brosur) return $this->generateResponse->response404();
+            $brosur->delete();
+            return $this->generateResponse->response201(null, 'Brosur deleted');
+        } catch (\Throwable $th) {
+            return $this->generateResponse->response500('Internal Server Error', env('APP_DEBUG') ? $th->getMessage() : null);
+        }
     }
 }
