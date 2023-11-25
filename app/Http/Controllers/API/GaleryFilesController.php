@@ -29,12 +29,16 @@ class GaleryFilesController extends Controller
             $queryFileName = request()->query('file_name');
             $queryPage = request()->query('page') ? request()->query('page') : 1;
             $queryLimit = request()->query('limit') ? request()->query('limit') : $this->generateResponse->limit;
+            $queryThumbnail = request()->query('thumbnail') ? request()->query('thumbnail') : false;
             $queryResult = GaleryFile::query();
             if ($queryGaleri) {
                 $queryResult = $queryResult->where('galeri_id', 'like', '%' . $queryGaleri . '%');
             }
             if ($queryFileName) {
                 $queryResult = $queryResult->where('file_name', 'like', '%' . $queryFileName . '%');
+            }
+            if ($queryThumbnail) {
+                $queryResult = $queryResult->where('is_thumbnail', $queryThumbnail);
             }
             $totalData = $queryResult->count();
             $queryResult = $queryResult->offset(($queryPage - 1) * $queryLimit)->limit($queryLimit);
@@ -258,6 +262,21 @@ class GaleryFilesController extends Controller
     public function update(Request $request, string $id)
     {
         //
+    }
+
+    public function setThumbnail(Request $request, string $id)
+    {
+        try {
+            if (!$request->user() || !User::find($request->user()->id))
+                return $this->generateResponse->response401();
+            $galeryFile = GaleryFile::find($id);
+            if (!$galeryFile) return $this->generateResponse->response404('Fasilitas galeri not found');
+            $galeryFile->is_thumbnail = true;
+            $galeryFile->save();
+            return $this->generateResponse->response201($galeryFile, 'Success set thumbnail');
+        } catch (\Throwable $th) {
+            return $this->generateResponse->response500('Internal Server Error', env('APP_DEBUG') ? $th->getMessage() : null);
+        }
     }
 
     /**
