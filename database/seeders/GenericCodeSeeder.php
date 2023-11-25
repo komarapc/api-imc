@@ -72,5 +72,31 @@ class GenericCodeSeeder extends Seeder
         foreach ($post_status as $value) {
             GenericCode::create($value);
         }
+
+        $status_message_notification = [
+            [
+                'generic_code_id' => '004',
+                'generic_code_name' => 'Status Message and Notification'
+            ],
+            [
+                'generic_code_id' => '004^001',
+                'generic_code_name' => 'Unread',
+            ],
+            [
+                'generic_code_id' => '004^002',
+                'generic_code_name' => 'Read',
+            ],
+            [
+                'generic_code_id' => '004^003',
+                'generic_code_name' => 'Spam and Phising',
+            ],
+            [
+                'generic_code_id' => '004^004',
+                'generic_code_name' => 'Starred',
+            ],
+        ];
+        foreach ($status_message_notification as $value) {
+            GenericCode::create($value);
+        }
     }
 }

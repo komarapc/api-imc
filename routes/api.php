@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\AccountController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\BannerController;
+use App\Http\Controllers\API\ContactMessageController;
 use App\Http\Controllers\API\FasilitasController;
 use App\Http\Controllers\API\FasilitasGaleriController;
 use App\Http\Controllers\API\GaleryFilesController;
@@ -152,6 +153,15 @@ Route::middleware('bearerToken')->group(function () {
         ->group(function () {
             Route::patch('/{id}/update-password', 'updatePassword')->name('update-password');
             Route::patch('/{id}/update-profile', 'updateProfile')->name('update-profile');
+        });
+    Route::controller(ContactMessageController::class)
+        ->prefix('contact-message')
+        ->name('contact-message.')
+        ->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::post('/', 'store')->name('store')->withoutMiddleware('bearerToken');
+            Route::patch('/{id}/status', 'status')->name('read');
+            Route::delete('/{id}', 'destroy')->name('destroy');
         });
 });
 Route::prefix('statistik')
