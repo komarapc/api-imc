@@ -9,6 +9,7 @@ use App\Http\Controllers\API\FasilitasGaleriController;
 use App\Http\Controllers\API\GaleryFilesController;
 use App\Http\Controllers\API\GenericCodeController;
 use App\Http\Controllers\API\GaleryController;
+use App\Http\Controllers\API\OurTeamController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\PpdbAlurPendaftaranController;
 use App\Http\Controllers\API\PpdbBrosurController;
@@ -176,6 +177,17 @@ Route::middleware('bearerToken')->group(function () {
                     Route::put('/teacher-student/{id}', 'update')->name('update');
                     Route::delete('/teacher-student/{id}', 'destroy')->name('destroy');
                 });
+        });
+    Route::controller(OurTeamController::class)
+        ->name('our-team.')
+        ->prefix('our-team')
+        ->group(function () {
+            Route::get('/', 'index')->name('index')->withoutMiddleware('bearerToken');
+            Route::get('/{id}', 'show')->name('show')->withoutMiddleware('bearerToken');
+            Route::post('/', 'store')->name('store');
+            Route::put('/{id}', 'update')->name('update');
+            Route::delete('/{id}', 'destroy')->name('destroy');
+            Route::delete('/{id}/avatar', 'deleteImageOurTeam')->name('destroy-avatar');
         });
 });
 Route::prefix('statistik')
