@@ -12,6 +12,7 @@ use App\Http\Controllers\API\GaleryController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\PpdbAlurPendaftaranController;
 use App\Http\Controllers\API\PpdbBrosurController;
+use App\Http\Controllers\API\StatisticTeacherStudent;
 use App\Http\Controllers\API\TestimonialController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -162,6 +163,19 @@ Route::middleware('bearerToken')->group(function () {
             Route::post('/', 'store')->name('store')->withoutMiddleware('bearerToken');
             Route::patch('/{id}/status', 'status')->name('read');
             Route::delete('/{id}', 'destroy')->name('destroy');
+        });
+    Route::prefix('statistik')
+        ->name('statistik.')
+        ->group(function () {
+            Route::controller(StatisticTeacherStudent::class)
+                ->name('teacher-student.')
+                ->group(function () {
+                    Route::get('/teacher-student', 'index')->name('index')->withoutMiddleware('bearerToken');
+                    Route::get('/teacher-student/{id}', 'show')->name('show')->withoutMiddleware('bearerToken');
+                    Route::post('/teacher-student', 'store')->name('store');
+                    Route::put('/teacher-student/{id}', 'update')->name('update');
+                    Route::delete('/teacher-student/{id}', 'destroy')->name('destroy');
+                });
         });
 });
 Route::prefix('statistik')
