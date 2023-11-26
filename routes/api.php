@@ -82,7 +82,8 @@ Route::middleware('bearerToken')->group(function () {
             Route::get('/fasilitas-galeri', 'index')->name('index')->withoutMiddleware('bearerToken');
             Route::get('/fasilitas-galeri/{id}', 'show')->name('show')->withoutMiddleware('bearerToken');
             Route::post('/fasilitas-galeri', 'store')->name('store');
-            Route::put('/fasilitas-galeri/{id}', 'update')->name('update');
+            // Route::put('/fasilitas-galeri/{id}', 'update')->name('update');
+            Route::patch('/fasilitas-galeri/{id}/thumbnail', 'setThumbnail')->name('thumbnail');
             Route::delete('/fasilitas-galeri/{id}', 'destroy')->name('destroy');
             Route::get('/fasilitas-galeri/{id}/total', 'countTotalByFasilitasId')
                 ->name('countTotalByFasilitasId')->withoutMiddleware('bearerToken');

@@ -14,4 +14,9 @@ class FasilitasGaleri extends Model
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
     protected $keyType = 'string';
     public $incrementing = false;
+
+    public function fasilitas()
+    {
+        return $this->belongsTo(Fasilitas::class);
+    }
 }

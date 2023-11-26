@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('fasilitas_id', 21);
             $table->string('file_name');
             $table->string('url');
+            $table->boolean('is_thumbnail')->default(false);
             $table->timestamps();
         });
     }
