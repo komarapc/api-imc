@@ -271,7 +271,8 @@ class PostController extends Controller
         }
     }
 
-    public function statisticByCategory(){
+    public function statisticByCategory()
+    {
         try {
             $post = Post::query();
             $post->selectRaw('count(*) as total, category_id');
@@ -280,7 +281,42 @@ class PostController extends Controller
             $data = $post->get();
             return $this->generateResponse->response200($data, 'Success');
         } catch (\Throwable $th) {
-            return $this->generateResponse->response500('Internal Server Error', env('APP_DEBUG') ? $th->getMessage() : null);   
+            return $this->generateResponse->response500('Internal Server Error', env('APP_DEBUG') ? $th->getMessage() : null);
+        }
+    }
+
+    public function statisticByMonthYear()
+    {
+        try {
+            $queryMonth = request()->query('month') ? request()->query('month') : date('m');
+            $queryYear = request()->query('year') ? request()->query('year') : date('Y');
+            $post = Post::query();
+            $post->selectRaw('count(*) as total, EXTRACT(MONTH FROM created_at) as month, EXTRACT(YEAR FROM created_at) as year');
+            $post->whereRaw('EXTRACT(MONTH FROM created_at) = ' . $queryMonth);
+            $post->whereRaw('EXTRACT(YEAR FROM created_at) = ' . $queryYear);
+            $post->groupBy('month', 'year');
+            $data = $post->get();
+            return $this->generateResponse->response200($data, 'Success');
+        } catch (\Throwable $th) {
+            return $this->generateResponse->response500('Internal Server Error', env('APP_DEBUG') ? $th->getMessage() : null);
+        }
+    }
+
+    public function statisticTotalByDateRange()
+    {
+        try {
+            // if start date is empty set to 1st day of current month
+            $queryStartDate = request()->query('start_date') ? request()->query('start_date') : date('Y-m-01');
+            // if end date is empty set to current date
+            $queryEndDate = request()->query('end_date') ? request()->query('end_date') : date('Y-m-d');
+            $post = Post::query();
+            $post->selectRaw('count(*) as total, category_id');
+            $post->whereBetween('created_at', [$queryStartDate, $queryEndDate]);
+            $post->groupBy('category_id');
+            $data = $post->get();
+            return $this->generateResponse->response200($data, 'Success');
+        } catch (\Throwable $th) {
+            return $this->generateResponse->response500('Internal Server Error', env('APP_DEBUG') ? $th->getMessage() : null);
         }
     }
 }
