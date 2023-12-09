@@ -15,6 +15,7 @@ use App\Http\Controllers\API\PpdbAlurPendaftaranController;
 use App\Http\Controllers\API\PpdbBrosurController;
 use App\Http\Controllers\API\StatisticTeacherStudent;
 use App\Http\Controllers\API\TestimonialController;
+use App\Http\Controllers\API\WebVisitorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -135,20 +136,24 @@ Route::middleware('bearerToken')->group(function () {
     Route::prefix('ppdb')
         ->name('ppdb.')
         ->group(function () {
-            Route::controller(PpdbAlurPendaftaranController::class)->name('alur-pendaftaran.')->group(function () {
-                Route::get('/alur-pendaftaran', 'index')->name('index')->withoutMiddleware('bearerToken');
-                Route::get('/alur-pendaftaran/{id}', 'show')->name('show')->withoutMiddleware('bearerToken');
-                Route::post('/alur-pendaftaran', 'store')->name('store');
-                Route::put('/alur-pendaftaran/{id}', 'update')->name('update');
-                Route::delete('/alur-pendaftaran/{id}', 'destroy')->name('destroy');
-            });
-            Route::controller(PpdbBrosurController::class)->name('brosur.')->group(function () {
-                Route::get('/brosur', 'index')->name('index')->withoutMiddleware('bearerToken');
-                Route::get('/brosur/{id}', 'show')->name('show')->withoutMiddleware('bearerToken');
-                Route::post('/brosur', 'store')->name('store');
-                Route::put('/brosur/{id}', 'update')->name('update');
-                Route::delete('/brosur/{id}', 'destroy')->name('destroy');
-            });
+            Route::controller(PpdbAlurPendaftaranController::class)
+                ->name('alur-pendaftaran.')
+                ->group(function () {
+                    Route::get('/alur-pendaftaran', 'index')->name('index')->withoutMiddleware('bearerToken');
+                    Route::get('/alur-pendaftaran/{id}', 'show')->name('show')->withoutMiddleware('bearerToken');
+                    Route::post('/alur-pendaftaran', 'store')->name('store');
+                    Route::put('/alur-pendaftaran/{id}', 'update')->name('update');
+                    Route::delete('/alur-pendaftaran/{id}', 'destroy')->name('destroy');
+                });
+            Route::controller(PpdbBrosurController::class)
+                ->name('brosur.')
+                ->group(function () {
+                    Route::get('/brosur', 'index')->name('index')->withoutMiddleware('bearerToken');
+                    Route::get('/brosur/{id}', 'show')->name('show')->withoutMiddleware('bearerToken');
+                    Route::post('/brosur', 'store')->name('store');
+                    Route::put('/brosur/{id}', 'update')->name('update');
+                    Route::delete('/brosur/{id}', 'destroy')->name('destroy');
+                });
         });
     Route::controller(AccountController::class)
         ->prefix('account')
@@ -197,8 +202,23 @@ Route::prefix('statistik')
         Route::get('/fasilitas', [FasilitasController::class, 'statistic'])->name('fasilitas');
         Route::get('/galeri', [GaleryController::class, 'statistic'])->name('galery');
         Route::get('/testimoni', [TestimonialController::class, 'statistic'])->name('testimoni');
-        Route::prefix('post')->name('post.')->controller(PostController::class)->group(function () {
-            Route::get('/', 'statistic')->name('index');
-            ROute::get('/kategori', 'statisticByCategory')->name('category');
-        });
+        Route::prefix('post')
+            ->name('post.')
+            ->controller(PostController::class)
+            ->group(function () {
+                Route::get('/', 'statistic')->name('index');
+                Route::get('/kategori', 'statisticByCategory')->name('category');
+                Route::get('/by-month-year', 'statisticByMonthYear')->name('month-year');
+                Route::get('total-by-date', 'statisticTotalByDateRange')->name('total-by-date');
+            });
+        Route::controller(WebVisitorController::class)
+            ->name('web-visitor.')
+            ->prefix('web-visitor')
+            ->group(function () {
+                Route::get('/', 'index')->name('index')->withoutMiddleware('bearerToken');
+                Route::get('/{id}', 'show')->name('show')->withoutMiddleware('bearerToken');
+                Route::post('/', 'store')->name('store')->withoutMiddleware('bearerToken');
+                Route::delete('/{id}', 'destroy')->name('destroy');
+                Route::get('/total/visit', 'statistic')->name('statistic');
+            });
     });
