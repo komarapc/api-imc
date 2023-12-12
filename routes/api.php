@@ -210,6 +210,7 @@ Route::prefix('statistik')
                 Route::get('/kategori', 'statisticByCategory')->name('category');
                 Route::get('/by-month-year', 'statisticByMonthYear')->name('month-year');
                 Route::get('total-by-date', 'statisticTotalByDateRange')->name('total-by-date');
+                Route::get('/most-viewed', 'statisticMostViewed')->name('most-viewed');
             });
         Route::controller(WebVisitorController::class)
             ->name('web-visitor.')

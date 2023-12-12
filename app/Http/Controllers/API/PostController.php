@@ -139,6 +139,10 @@ class PostController extends Controller
             if (!$post)
                 return $this->generateResponse->response404();
 
+            // update view count
+            $post->view_count = $post->view_count + 1;
+            $post->save();
+
             return $this->generateResponse->response200($post, 'Success');
         } catch (\Throwable $th) {
             return $this->generateResponse->response500('Internal Server Error', env('APP_DEBUG') ? $th->getMessage() : null);
@@ -313,6 +317,21 @@ class PostController extends Controller
             $post->selectRaw('count(*) as total, category_id');
             $post->whereBetween('created_at', [$queryStartDate, $queryEndDate]);
             $post->groupBy('category_id');
+            $data = $post->get();
+            return $this->generateResponse->response200($data, 'Success');
+        } catch (\Throwable $th) {
+            return $this->generateResponse->response500('Internal Server Error', env('APP_DEBUG') ? $th->getMessage() : null);
+        }
+    }
+
+    public function mostViewed()
+    {
+        try {
+            $queryLimit = request()->query('limit') ? request()->query('limit') : 5;
+            $post = Post::query();
+            $post->orderBy('view_count', 'desc');
+            $post->limit($queryLimit);
+            $post->with(['typePost', 'category', 'status', 'postedBy']);
             $data = $post->get();
             return $this->generateResponse->response200($data, 'Success');
         } catch (\Throwable $th) {

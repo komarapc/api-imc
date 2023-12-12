@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('posted_by');
             $table->string('updated_by')->nullable();
             $table->string('deleted_by')->nullable();
+            $table->integer('view_count')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });
