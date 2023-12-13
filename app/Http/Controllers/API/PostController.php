@@ -238,6 +238,11 @@ class PostController extends Controller
                 ->first();
             if (!$post)
                 return $this->generateResponse->response404();
+
+            if (!auth()->user()) {
+                $post->view_count = $post->view_count + 1;
+                $post->save();
+            }
             return $this->generateResponse->response200($post, 'Success');
         } catch (\Throwable $th) {
             return $this->generateResponse->response500('Internal Server Error', env('APP_DEBUG') ? $th->getMessage() : null);
