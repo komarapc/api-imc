@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Role;
 use App\Models\User;
+use Hidehalo\Nanoid\Client;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Crypt;
@@ -16,13 +17,24 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        $client = new Client();
         $roles = Role::get()->first();
-
-        $user = User::create([
-            'name' => 'Admin',
-            'email' => 'admin@mail.com',
-            'password' => Hash::make('rememberPassword123'),
-            'role_id' => $roles->id,
-        ]);
+        $users = [
+            [
+                'id' => $client->generateId(21),
+                'name' => 'Developer',
+                'email' => 'komar.izmi@gmail.com',
+                'password' => Hash::make('rememberPassword123'),
+                'role_id' => $roles->id,
+            ],
+            [
+                'id' => $client->generateId(21),
+                'name' => 'Admin imc',
+                'email' => 'adminimc@mail.com',
+                'password' => Hash::make('rememberPassword123'),
+                'role_id' => $roles->id,
+            ],
+        ];
+        User::insert($users);
     }
 }

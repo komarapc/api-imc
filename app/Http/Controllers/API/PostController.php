@@ -33,6 +33,12 @@ class PostController extends Controller
             $queryPage = request()->query('page') ? request()->query('page') : 1;
             $queryLimit = request()->query('limit') ? request()->query('limit') : $this->generateResponse->limit;
 
+            // sort by 'view_count:desc' or 'view_count:asc'
+            $querySort = request()->query('sort');
+            $querySort = $querySort ? explode(':', $querySort) : null;
+            $querySortBy = $querySort ? $querySort[0] : null;
+            $querySortType = $querySort ? $querySort[1] : null;
+
             $post = Post::query();
             if ($queryTitle)
                 $post->where('title', 'like', '%' . $queryTitle . '%');
@@ -44,6 +50,9 @@ class PostController extends Controller
                 $post->where('category_id', $queryCategory);
             if ($queryStatus)
                 $post->where('status_id', $queryStatus);
+            if ($querySortBy && $querySortType)
+                $post->orderBy($querySortBy, $querySortType);
+
             $post->orderBy('created_at', 'desc');
             $post->with(['typePost', 'category', 'status', 'postedBy']);
             $totalData = $post->count();
@@ -338,6 +347,29 @@ class PostController extends Controller
             $post->limit($queryLimit);
             $post->with(['typePost', 'category', 'status', 'postedBy']);
             $data = $post->get();
+            return $this->generateResponse->response200($data, 'Success');
+        } catch (\Throwable $th) {
+            return $this->generateResponse->response500('Internal Server Error', env('APP_DEBUG') ? $th->getMessage() : null);
+        }
+    }
+
+    public function mostViewedByKategori()
+    {
+        try {
+
+            // sum view count by category
+            $post = Post::query();
+            $post->selectRaw('sum(view_count) as total, category_id');
+            $post->groupBy('category_id');
+            $post->orderBy('total', 'asc');
+            $post->with(['category']);
+            $data = $post->get();
+            $data = $data->map(function ($item) {
+                $item->total = (int)$item->total;
+                $item->category_name = $item->category->generic_code_name;
+                unset($item->category);
+                return $item;
+            });
             return $this->generateResponse->response200($data, 'Success');
         } catch (\Throwable $th) {
             return $this->generateResponse->response500('Internal Server Error', env('APP_DEBUG') ? $th->getMessage() : null);

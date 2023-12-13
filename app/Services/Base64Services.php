@@ -12,6 +12,8 @@ class Base64Services
    * @param string $path
    * @return object
    */
+
+  public $allowed_image_extension = ['jpg', 'jpeg', 'png'];
   public function uploadImage(string $base64String, string $path)
   {
     $extension = $this->getBase64FileExtension($base64String);
@@ -23,7 +25,7 @@ class Base64Services
     $file_url = url($path . $imageName);
     return (object)[
       'file_name' => $imageName,
-      'file_url' => $file_url,
+      'file_url' => $path . $imageName,
       'file_path' => $uploadPath
     ];
   }

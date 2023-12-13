@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\FasilitasGaleri;
 use App\Models\GaleryFile;
 use App\Models\User;
+use App\Services\Base64Services;
 use App\Services\GenerateResponse;
 use Hidehalo\Nanoid\Client;
 use Illuminate\Http\Request;
@@ -15,9 +16,11 @@ use Illuminate\Support\Facades\Log;
 class GaleryFilesController extends Controller
 {
     protected $generateResponse;
-    public function __construct(GenerateResponse $generateResponse)
+    protected $base64Service;
+    public function __construct(GenerateResponse $generateResponse, Base64Services $base64Service)
     {
         $this->generateResponse = $generateResponse;
+        $this->base64Service = $base64Service;
     }
     /**
      * Display a listing of the resource.
@@ -113,73 +116,32 @@ class GaleryFilesController extends Controller
 
             $galeryFiles = [];
             foreach ($request['files'] as $file) {
-                // check if file is base64
-                if (!preg_match('/^data:image\/(\w+);base64,/', $file['base64'])) {
-                    return response()->json([
-                        'statusCode' => 400,
-                        'statusMessage' => "BAD_REQUEST",
-                        'message' => 'Gagal menambahkan file galeri',
-                        'error' => 'File is not base64',
-                        'success' => false,
-                    ], 400);
-                }
-                // check if file is image with type jpg, jpeg, JPG, png, PNG
-                if (!preg_match('/^data:image\/(jpg|jpeg|JPG|png|PNG);base64,/', $file['base64'])) {
-                    return response()->json([
-                        'statusCode' => 400,
-                        'statusMessage' => "BAD_REQUEST",
-                        'message' => 'Gagal menambahkan file galeri',
-                        'error' => 'File is not image',
-                        'success' => false,
-                    ], 400);
-                }
-                // convert base64 to image by removing unnecessary string
-                $file['base64'] = preg_replace('/^data:image\/\w+;base64,/', '', $file['base64']);
-                $file['base64'] = str_replace(' ', '+', $file['base64']);
-                $file['file_extension'] = $this->getBase64FileExtension($file['base64']);
-                $file['base64'] = base64_decode($file['base64']);
+                $data = (object) $file;
+                $imageBase64 = $data->base64;
+                if (!$this->base64Service->validateBase64($imageBase64))
+                    return $this->generateResponse->response400('Invalid Input', 'Invalid image base64 string');
+                $extension = $this->base64Service->fileExtension($imageBase64);
+                if (!in_array($extension, ['jpg', 'jpeg', 'png']))
+                    return $this->generateResponse->response400('Invalid Input', 'Invalid image extension');
 
-                if ($file['base64'] === false) {
-                    return response()->json([
-                        'statusCode' => 400,
-                        'statusMessage' => "BAD_REQUEST",
-                        'message' => 'Failed store fasilitas galeri',
-                        'error' => 'Failed to decode base64 data',
-                        'success' => false,
-                    ], 400);
-                }
+                $base64Size = $this->base64Service->base64Size($imageBase64);
+                if ($base64Size > 500)
+                    return $this->generateResponse->response400('Invalid Input', 'Image size must be less than 500kB');
 
-                // check maximum filesize is 500kb
-                if (strlen($file['base64']) > 500000) {
-                    return response()->json([
-                        'statusCode' => 400,
-                        'statusMessage' => "BAD_REQUEST",
-                        'message' => 'Failed store fasilitas galeri',
-                        'error' => 'File size is too large, maximum file size is 500kb',
-                        'success' => false,
-                    ], 400);
-                }
+                $image = $this->base64Service->uploadImage($this->base64Service->base64StringOnly($imageBase64), '/images/galeri/');
+                if (!$image) return $this->generateResponse->response500('Internal Server Error', 'Failed to upload image');
 
-
-                // generate file name
-                $client = new Client();
-                $file['file_name'] = $client->generateId(21) . '-' . time() . '.' . $file['file_extension'];
-                // $file['base64'] = base64_decode($file['base64']);
-                $path = public_path() . '/images/galeri/' . $file['file_name'];
-                // create file url for response
-                $file['file_url'] = url('/images/galeri/' . $file['file_name']);
-                // save to database
-                $fileGalery = new GaleryFile();
-                $fileGalery->galeri_id = (string) $request->galeri_id;
-                $fileGalery->file_name = $file['file_name'];
-                $fileGalery->url = $file['file_url'];
-                $fileGalery->save();
-                // save image if success save to database
-                if ($fileGalery->save()) {
-                    file_put_contents($path, $file['base64']);
-                }
-                array_push($galeryFiles, $fileGalery);
+                // push to array
+                array_push($galeryFiles, [
+                    'id' => (new Client())->generateId(21),
+                    'galeri_id' => $request->galeri_id,
+                    'file_name' => $image->file_name,
+                    'url' => $image->file_url,
+                ]);
             }
+
+            GaleryFile::insert($galeryFiles);
+
             DB::commit();
             return response()->json([
                 'statusCode' => 201,
@@ -187,7 +149,7 @@ class GaleryFilesController extends Controller
                 'message' => 'Success store fasilitas galeri',
                 'success' => true,
                 'data' => [
-                    'galeries' => $galeryFiles
+                    'galeries' => $galeryFiles,
                 ]
             ]);
         } catch (\Throwable $th) {

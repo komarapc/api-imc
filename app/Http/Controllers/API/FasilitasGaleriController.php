@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\FasilitasGaleri;
 use App\Models\User;
+use App\Services\Base64Services;
 use App\Services\GenerateResponse;
 use Hidehalo\Nanoid\Client;
 use Illuminate\Http\Request;
@@ -14,9 +15,11 @@ use Illuminate\Support\Facades\Log;
 class FasilitasGaleriController extends Controller
 {
     protected $generateResponse;
-    public function __construct(GenerateResponse $generateResponse)
+    protected $base64Service;
+    public function __construct(GenerateResponse $generateResponse, Base64Services $base64Service)
     {
         $this->generateResponse = $generateResponse;
+        $this->base64Service = $base64Service;
     }
     /**
      * Display a listing of the resource.
@@ -118,71 +121,29 @@ class FasilitasGaleriController extends Controller
 
             $fasilitasGaleris = [];
             foreach ($request['files'] as $file) {
-                // check if file is base64
-                if (!preg_match('/^data:image\/(\w+);base64,/', $file['base64'])) {
-                    return response()->json([
-                        'statusCode' => 400,
-                        'statusMessage' => "BAD_REQUEST",
-                        'message' => 'Failed store fasilitas galeri',
-                        'error' => 'File is not base64',
-                        'success' => false,
-                    ], 400);
-                }
-                // check if file is image with type jpg, jpeg, JPG, png, PNG
-                if (!preg_match('/^data:image\/(jpg|jpeg|JPG|png|PNG);base64,/', $file['base64'])) {
-                    return response()->json([
-                        'statusCode' => 400,
-                        'statusMessage' => "BAD_REQUEST",
-                        'message' => 'Failed store fasilitas galeri',
-                        'error' => 'File is not image',
-                        'success' => false,
-                    ], 400);
-                }
-                // convert base64 to image by removing unnecessary string
-                $file['base64'] = preg_replace('/^data:image\/\w+;base64,/', '', $file['base64']);
-                $file['base64'] = str_replace(' ', '+', $file['base64']);
-                $file['file_extension'] = $this->getBase64FileExtension($file['base64']);
-                $file['base64'] = base64_decode($file['base64']);
+                $data = (object) $file;
+                $imageBase64 = $data->base64;
 
-                if ($file['base64'] === false) {
-                    return response()->json([
-                        'statusCode' => 400,
-                        'statusMessage' => "BAD_REQUEST",
-                        'message' => 'Failed store fasilitas galeri',
-                        'error' => 'Failed to decode base64 data',
-                        'success' => false,
-                    ], 400);
-                }
+                if (!$this->base64Service->validateBase64($imageBase64))
+                    return $this->generateResponse->response400('Invalid Input', 'Invalid base64');
 
-                // check maximum filesize is 500kb
-                if (strlen($file['base64']) > 500000) {
-                    return response()->json([
-                        'statusCode' => 400,
-                        'statusMessage' => "BAD_REQUEST",
-                        'message' => 'Failed store fasilitas galeri',
-                        'error' => 'File size is too large, maximum file size is 500kb',
-                        'success' => false,
-                    ], 400);
-                }
+                $extension = $this->base64Service->fileExtension($imageBase64);
+                if (!in_array($extension, $this->base64Service->allowed_image_extension))
+                    return $this->generateResponse->response400('Invalid Input', 'Invalid image extension');
 
+                $base64Size = $this->base64Service->base64Size($imageBase64);
+                if ($base64Size > 500)
+                    return $this->generateResponse->response400('Invalid Input', 'Image size must be less than 500kB');
 
-                // generate file name
-                $client = new Client();
-                $file['file_name'] = $client->generateId(21) . '-' . time() . '.' . $file['file_extension'];
-                // $file['base64'] = base64_decode($file['base64']);
-                $path = public_path() . '/images/fasilitas-galeri/' . $file['file_name'];
-                // create file url for response
-                $file['file_url'] = url('/images/fasilitas-galeri/' . $file['file_name']);
-                // save to database
+                $image = $this->base64Service->uploadImage($this->base64Service->base64StringOnly($imageBase64), '/images/fasilitas-galeri/');
+
                 $fasilitasGaleri = new FasilitasGaleri();
-                $fasilitasGaleri->fasilitas_id = (string) $request->fasilitas_id;
-                $fasilitasGaleri->file_name = $file['file_name'];
-                $fasilitasGaleri->url = $file['file_url'];
+                $fasilitasGaleri->id = (new Client())->generateId(21);
+                $fasilitasGaleri->fasilitas_id = $request['fasilitas_id'];
+                $fasilitasGaleri->file_name = $image->file_name;
+                $fasilitasGaleri->url = $image->file_url;
+
                 $fasilitasGaleri->save();
-                // save image if success save to database
-                if ($fasilitasGaleri->save()) {
-                    file_put_contents($path, $file['base64']);
-                }
                 array_push($fasilitasGaleris, $fasilitasGaleri);
             }
             DB::commit();
