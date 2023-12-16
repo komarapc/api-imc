@@ -22,6 +22,6 @@ class Galery extends Model
 
     public function galery_files()
     {
-        return $this->hasMany(GaleryFile::class, 'galery_id', 'id');
+        return $this->hasMany(GaleryFile::class, 'galeri_id', 'id');
     }
 }

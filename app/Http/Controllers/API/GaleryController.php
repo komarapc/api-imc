@@ -38,6 +38,9 @@ class GaleryController extends Controller
                 });
             }
             $galeries->with('jenjang');
+            $galeries->with(['galery_files' => function ($query) {
+                $query->take(10);
+            }]);
             $galeries->orderBy('name', 'asc');
 
             $totalData = $galeries->count();
