@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
             [
                 'id' => $client->generateId(21),
                 'name' => 'Developer',
-                'email' => 'komar.izmi@gmail.com',
+                'email' => 'developer@mail.com',
                 'password' => Hash::make('rememberPassword123'),
                 'role_id' => $roles->id,
             ],

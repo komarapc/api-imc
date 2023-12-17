@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\AccountController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\BannerController;
+use App\Http\Controllers\API\CalendarAcademicController;
 use App\Http\Controllers\API\ContactMessageController;
 use App\Http\Controllers\API\FasilitasController;
 use App\Http\Controllers\API\FasilitasGaleriController;
@@ -195,6 +196,15 @@ Route::middleware('bearerToken')->group(function () {
             Route::delete('/{id}', 'destroy')->name('destroy');
             Route::delete('/{id}/avatar', 'deleteImageOurTeam')->name('destroy-avatar');
         });
+
+    Route::controller(CalendarAcademicController::class)
+        ->prefix('calendar-academic')
+        ->name('calendar-academic.')
+        ->group(function () {
+            Route::get('/', 'index')->name('index')->withoutMiddleware('bearerToken');
+            Route::post('/', 'store')->name('store');
+            Route::delete('/{id}', 'destroy')->name('destroy');
+        });    // end of middleware bearerToken
 });
 Route::prefix('statistik')
     ->name('statistik.')
