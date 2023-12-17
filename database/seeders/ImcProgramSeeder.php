@@ -18,6 +18,7 @@ class ImcProgramSeeder extends Seeder
         $program_imc = [
             (object)[
                 'name' => 'PROGRAM imc AL ISLAM',
+                'description' => "Program imc Al Islam adalah program yang memberikan stimulus nilai -nilai keislaman kepada peserta didik, yang bertujuan untuk membentuk Karakter Kepribadian Islam. Kegiatan yang masuk dalam program imc Al Islam adalah kegiatan Tahsin dan Tahfidz serta karantina Tahfidz, Islamic Character Building (ICB), Islamic Day dan Pembiasaan Islam.",
                 'sub_program' => [
                     (object)[
                         'name' => 'Dzikir dan Shalawat',
@@ -43,6 +44,7 @@ class ImcProgramSeeder extends Seeder
             ],
             (object)[
                 'name' => 'PROGRAM imc CLEANS',
+                'description' => "Program imc Cleans adalah program yang memberikan stimulus untuk hidup bersih kepada peserta didik. Kebersihan diterapkan di seluruh aktifitas imc dimulai dari kedatangan di sekolah sampai dengan kepulangan peserta didik, dari ruang kelas sampai dengan ruang sekolah. kebersihan adalah sebuah simbol keislaman yang harus menjadi pembiasaan di dalam lingkungan imc.",
                 'sub_program' => [
                     (object)[
                         'name' => 'Kebersihan Diri',
@@ -60,6 +62,7 @@ class ImcProgramSeeder extends Seeder
             ],
             (object)[
                 'name' => 'PROGRAM imc FUN',
+                'description' => "Program imc Fun adalah program yang memberikan stimulus nilai nilai kebahagiaan kepada peserta didik, dimulai dari penyambutan dan pengantaran siswa dilakukan dengan ramah, ceria dan penuh cinta dan kasih sayang, serta kegiatan – kegiatan yang menimbulkan kebahagiaan.",
                 'sub_program' => [
                     (object)[
                         'name' => 'Welcome Back Day',
@@ -69,6 +72,7 @@ class ImcProgramSeeder extends Seeder
             ],
             (object)[
                 'name' => 'PROGRAM imc PEDULI',
+                'description' => "Program imc Peduli adalah program yang memberikan stimulus nilai – nilai kebahagiaan, dengan kegiatan donasi siswa yang dilakukan di bulan suci Ramadhan, Idul Qurban serta aktifitas infaq mingguan oleh siswa dan dengan memberikan serta membagikan donasi kepada fakir miskin dan pondok yatim piatu memberikan nilai - nilai kebahagiaan tersendiri kepada peserta didik imc.",
                 'sub_program' => [
                     (object)[
                         'name' => 'Adiwiyata',
@@ -82,6 +86,7 @@ class ImcProgramSeeder extends Seeder
             ],
             (object)[
                 'name' => 'PROGRAM imc TERSENYUM',
+                'description' => "Program imc Tersenyum juga adalah program yang memberikan stimulus nilai-nilai kebahagiaan, ditetapkan setiap tanggal 07 dan 21 setiap bulannya. Seluruh civitas akademik imc diwajibkan untuk melaksanakan seluruh aktivitas dengan senyuman. SENYUMAN ADALAH GERBANG PINTU UNTUK MENUJU KESUKSESAN.",
                 'sub_program' => [
                     (object)[
                         'name' => 'Hari Tersenyum',
@@ -91,6 +96,7 @@ class ImcProgramSeeder extends Seeder
             ],
             (object)[
                 'name' => 'PROGRAM imc SMART',
+                'description' => "Program imc Smart adalah program yang memberikan stimulus nilai – nilai kecerdasan, dengan kegiatan literasi numerasi dan pembiasaan membaca buku sesuai dengan bakat kecerdasan yang dimiliki para peserta didik serta science project dan dengan Kecerdasan serta bakat yang dimiliki oleh siswa ditumbuhkembangkan melalui strategi pembelajaran khas di imc, diharapkan siswa akan mempunyai kecerdasan sesuai dengan Bakat dan Kecerdasan yang dimiliki",
                 'sub_program' => [
                     (object)[
                         'name' => 'Literasi Numerasi',
@@ -108,6 +114,7 @@ class ImcProgramSeeder extends Seeder
             ],
             (object)[
                 'name' => 'PROGRAM imc SEHAT',
+                'description' => "Program imc Sehat adalah program yang memberikan stimulus Kesehatan kepada peserta didik agar selalu senantiasa menjaga Kesehatan, karena Kesehatan sangat bernilai PENYING dalam kehidupan manusia, melalui kegiatan kegiatan pengecekan dan seminar – seminar Kesehatan yang di isi oleh Wali Murid dengan Konsep PARENT TEACHING memberikan stimulus kepada siswa untuk HIDUP SEHAT.",
                 'sub_program' => [
                     (object)[
                         'name' => "Kegiatan Kesehatan",
@@ -117,6 +124,7 @@ class ImcProgramSeeder extends Seeder
             ],
             (object)[
                 'name' => 'PROGRAM imc BERPRESTASI',
+                'description' => "Program imc Prestasi adalah program yang memberikan stimulus kepada peserta didik untuk berprestasi, kegiatan ini adalah kegiatan khusus dimana peserta didik akan di training dilakukan coaching untuk mendapatkan prestasi baik secara lokal, nasional maupun internasional.",
                 'sub_program' => [
                     (object)[
                         'name' => 'Program Khusus Pembinaan',
@@ -126,6 +134,7 @@ class ImcProgramSeeder extends Seeder
             ],
             (object)[
                 'name' => 'PROGRAM imc LEADERSHIP',
+                'description' => "Program imc Ledaership adalah program yang memberikan stimulus nilai – nilai kepempinan, melalui kegiatan experience leadership. Peserta Didik mendapatkan pengalaman leadership secara langsung sehingga diharapkan akan memunculkan Jiwa Kepemimpinan.",
                 'sub_program' => [
                     (object)[
                         'name' => 'Collaboration',
