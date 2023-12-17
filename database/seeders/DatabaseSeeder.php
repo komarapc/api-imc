@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             GenericCodeSeeder::class,
             FasilitasSeeder::class,
             GalerySeeder::class,
+            ImcProgramSeeder::class,
         ]);
     }
 }
