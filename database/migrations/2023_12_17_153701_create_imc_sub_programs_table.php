@@ -15,6 +15,7 @@ return new class extends Migration
             $table->string('id', 21)->primary();
             $table->string('program_id', 21);
             $table->string('name');
+            $table->string('slug')->unique();
             $table->text('description')->nullable();
             $table->timestamps();
             $table->softDeletes();

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('imc_programs', function (Blueprint $table) {
             $table->string('id', 21)->primary();
             $table->string('name');
+            $table->string('slug')->unique();
             $table->text('description')->nullable();
             $table->timestamps();
             $table->softDeletes();

@@ -159,6 +159,7 @@ class ImcProgramSeeder extends Seeder
                 $program_id = DB::table('imc_programs')->insertGetId([
                     'id' => $id,
                     'name' => $program->name,
+                    'slug' => Str::slug($program->name),
                     'description' => $program->description ?? null,
                     'created_at' => now(),
                     'updated_at' => now(),
@@ -170,6 +171,7 @@ class ImcProgramSeeder extends Seeder
                         'id' => $id_sub_program,
                         'program_id' => $id,
                         'name' => $sub_program->name,
+                        'slug' => Str::slug($sub_program->name),
                         'description' => $sub_program->description ?? null,
                         'created_at' => now(),
                         'updated_at' => now(),
