@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             FasilitasSeeder::class,
             GalerySeeder::class,
             ImcProgramSeeder::class,
+            OurTeamSeeder::class
         ]);
     }
 }
