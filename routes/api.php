@@ -10,6 +10,9 @@ use App\Http\Controllers\API\FasilitasGaleriController;
 use App\Http\Controllers\API\GaleryFilesController;
 use App\Http\Controllers\API\GenericCodeController;
 use App\Http\Controllers\API\GaleryController;
+use App\Http\Controllers\API\ImcProgramController;
+use App\Http\Controllers\API\ImcSubProgramController;
+use App\Http\Controllers\API\ImcSubProgramGaleryController;
 use App\Http\Controllers\API\OurTeamController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\PpdbAlurPendaftaranController;
@@ -204,7 +207,35 @@ Route::middleware('bearerToken')->group(function () {
             Route::get('/', 'index')->name('index')->withoutMiddleware('bearerToken');
             Route::post('/', 'store')->name('store');
             Route::delete('/{id}', 'destroy')->name('destroy');
-        });    // end of middleware bearerToken
+        });
+    Route::controller(ImcProgramController::class)
+        ->name('imc-program.')
+        ->prefix('imc-program')
+        ->group(function () {
+            Route::get('/', 'index')->name('index')->withoutMiddleware('bearerToken');
+            Route::put('/{id}', 'update')->name('update');
+            Route::get('/{slug}', 'show')->name('show')->withoutMiddleware('bearerToken');
+        });
+
+    Route::controller(ImcSubProgramController::class)
+        ->name('imc-sub-program.')
+        ->prefix('imc-sub-program')
+        ->group(function () {
+            Route::get('/{slug}', 'show')->name('show')->withoutMiddleware('bearerToken');
+            Route::put('/{id}', 'update')->name('update');
+            Route::post('/', 'store')->name('store');
+            Route::delete('/{id}', 'destroy')->name('destroy');
+        });
+
+    Route::controller(ImcSubProgramGaleryController::class)
+        ->name('imc-sub-program-galery.')
+        ->prefix('imc-sub-program-galery')
+        ->group(function () {
+            Route::get('/{sub_program_id}', 'show')->name('show')->withoutMiddleware('bearerToken');
+            Route::post('/', 'store')->name('store');
+            Route::delete('/{id}', 'destroy')->name('destroy');
+        });
+    // end of middleware bearerToken
 });
 Route::prefix('statistik')
     ->name('statistik.')

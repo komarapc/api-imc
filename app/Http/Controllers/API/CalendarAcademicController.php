@@ -24,7 +24,7 @@ class CalendarAcademicController extends Controller
     {
         try {
             $queryCategory = request()->query('generic_code');
-            if (!$queryCategory) return $this->generateResponse->response400('Bad Request', 'Category is required');
+            if (!$queryCategory) return $this->generateResponse->response400('Bad Request', 'Generic code is required');
             $calendarAcademic = CalendarAcademic::where('generic_code', $queryCategory)->get();
             return $this->generateResponse->response200($calendarAcademic);
         } catch (\Throwable $th) {
